@@ -1,0 +1,1096 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>ELO</title>
+
+<style>
+
+/* =====================================================
+   BASE
+===================================================== */
+
+* {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+
+    background: #f4f4f1;
+    color: #111;
+
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 13px;
+}
+
+
+/* =====================================================
+   HEADER
+===================================================== */
+
+header {
+    position: fixed;
+
+    top: 0;
+    left: 0;
+
+    width: 100%;
+
+    padding: 12px 15px;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+
+    z-index: 1000;
+}
+
+
+.logo {
+    color: #111;
+    text-decoration: none;
+    font-size: 13px;
+}
+
+
+nav {
+    display: flex;
+    gap: 18px;
+}
+
+
+nav a {
+    color: #111;
+    text-decoration: none;
+}
+
+
+nav a:hover {
+    text-decoration: underline;
+}
+
+
+/* =====================================================
+   INTRO
+===================================================== */
+
+.intro {
+    position: fixed;
+
+    top: 55px;
+    left: 15px;
+
+    width: 220px;
+
+    line-height: 1.35;
+
+    z-index: 500;
+
+    pointer-events: none;
+}
+
+
+.intro p {
+    margin: 0 0 15px 0;
+}
+
+
+/* =====================================================
+   MUR
+===================================================== */
+
+.wall {
+    position: relative;
+
+    width: 100%;
+    height: 100vh;
+
+    overflow: hidden;
+}
+
+
+/* =====================================================
+   ELEMENTS
+===================================================== */
+
+.item {
+    position: absolute;
+
+    display: block;
+
+    color: #111;
+    text-decoration: none;
+
+    cursor: grab;
+
+    user-select: none;
+
+    z-index: 10;
+}
+
+
+.item:active {
+    cursor: grabbing;
+}
+
+
+/* =====================================================
+   IMAGES
+===================================================== */
+
+.item img {
+    display: block;
+
+    width: 100%;
+    height: auto;
+
+    pointer-events: none;
+
+    transition: opacity 0.15s ease;
+}
+
+
+/* =====================================================
+   TEXTE AU SURVOL
+===================================================== */
+
+.hover-text {
+    position: absolute;
+
+    left: 0;
+    top: 100%;
+
+    width: 240px;
+
+    margin-top: 5px;
+
+    font-size: 11px;
+    line-height: 1.35;
+
+    color: #111;
+
+    opacity: 0;
+
+    pointer-events: none;
+
+    transition: opacity 0.15s ease;
+}
+
+
+.item:hover .hover-text {
+    opacity: 1;
+}
+
+
+.item:hover > img {
+    opacity: 0.65;
+}
+
+
+/* =====================================================
+   MENU DESSINS
+===================================================== */
+
+.drawing-menu {
+
+    position: absolute;
+
+    left: 0;
+    top: 100%;
+
+    margin-top: 8px;
+
+    display: flex;
+
+    gap: 6px;
+
+    opacity: 0;
+
+    pointer-events: none;
+
+    transition: opacity 0.15s ease;
+
+}
+
+
+/* menu ouvert */
+
+.image4.show-menu .drawing-menu {
+
+    opacity: 1;
+
+    pointer-events: auto;
+
+}
+
+
+/* =====================================================
+   ICONES DESSINS
+===================================================== */
+
+.drawing-icon {
+
+    width: 28px;
+    height: 28px;
+
+    border: 1px solid #111;
+
+    background: #f4f4f1;
+
+    color: #111;
+
+    text-decoration: none;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    font-size: 9px;
+
+    cursor: pointer;
+
+    user-select: none;
+
+    transition:
+        background 0.15s ease,
+        color 0.15s ease;
+
+}
+
+
+.drawing-icon:hover {
+
+    background: #111;
+
+    color: #f4f4f1;
+
+}
+
+
+/* =====================================================
+   POSITIONS
+===================================================== */
+
+.image1 {
+    width: 180px;
+    left: 28%;
+    top: 12%;
+}
+
+
+.image2 {
+    width: 150px;
+    left: 52%;
+    top: 8%;
+}
+
+
+.image3 {
+    width: 220px;
+    left: 72%;
+    top: 25%;
+}
+
+
+.image4 {
+    width: 130px;
+    left: 12%;
+    top: 45%;
+}
+
+
+.image5 {
+    width: 190px;
+    left: 36%;
+    top: 48%;
+}
+
+
+.image6 {
+    width: 150px;
+    left: 60%;
+    top: 55%;
+}
+
+
+.image7 {
+    width: 210px;
+    left: 78%;
+    top: 62%;
+}
+
+
+.image8 {
+    width: 140px;
+    left: 22%;
+    top: 75%;
+}
+
+
+.image9 {
+    width: 170px;
+    left: 48%;
+    top: 78%;
+}
+
+
+.image10 {
+    width: 120px;
+    left: 70%;
+    top: 80%;
+}
+
+
+/* =====================================================
+   MOBILE
+===================================================== */
+
+@media (max-width: 600px) {
+
+    header {
+        padding: 10px;
+    }
+
+
+    nav {
+        gap: 8px;
+        font-size: 11px;
+    }
+
+
+    .intro {
+        position: absolute;
+
+        top: 50px;
+        left: 10px;
+
+        width: 180px;
+
+        font-size: 12px;
+    }
+
+
+    .wall {
+        height: 130vh;
+    }
+
+
+    .image1 {
+        width: 130px;
+        left: 5%;
+        top: 25%;
+    }
+
+
+    .image2 {
+        width: 110px;
+        left: 55%;
+        top: 20%;
+    }
+
+
+    .image3 {
+        width: 150px;
+        left: 42%;
+        top: 38%;
+    }
+
+
+    .image4 {
+        width: 100px;
+        left: 5%;
+        top: 45%;
+    }
+
+
+    .image5 {
+        width: 130px;
+        left: 65%;
+        top: 52%;
+    }
+
+
+    .image6 {
+        width: 110px;
+        left: 25%;
+        top: 58%;
+    }
+
+
+    .image7 {
+        width: 140px;
+        left: 55%;
+        top: 68%;
+    }
+
+
+    .image8 {
+        width: 100px;
+        left: 5%;
+        top: 75%;
+    }
+
+
+    .image9 {
+        width: 120px;
+        left: 40%;
+        top: 82%;
+    }
+
+
+    .image10 {
+        width: 90px;
+        left: 72%;
+        top: 88%;
+    }
+
+
+    .hover-text {
+        width: 180px;
+        font-size: 10px;
+    }
+
+
+    .drawing-menu {
+        gap: 5px;
+        margin-top: 6px;
+    }
+
+
+    .drawing-icon {
+        width: 27px;
+        height: 27px;
+        font-size: 8px;
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     HEADER
+===================================================== -->
+
+<header>
+
+    <a href="index.html" class="logo">
+        ELO
+    </a>
+
+
+    <nav>
+
+        <a href="">
+            research
+        </a>
+
+        <a href="https://vuaro.hotglue.me/">
+            projects
+        </a>
+
+        <a href="">
+            about
+        </a>
+
+    </nav>
+
+</header>
+
+
+
+<!-- =====================================================
+     INTRO
+===================================================== -->
+
+<div class="intro">
+
+    <p>
+        virtual museums<br>
+        digital spaces<br>
+        media archaeology
+    </p>
+
+
+</div>
+
+
+
+<!-- =====================================================
+     MUR
+===================================================== -->
+
+<main class="wall">
+
+
+    <!-- =================================================
+         01 — ARCHIVE
+    ================================================== -->
+
+    <a
+        href="maquette.html"
+        class="item image1"
+    >
+
+        <img src="images/i10.jpg">
+
+        <div class="hover-text">
+
+            <strong>
+                01 — maquette
+            </strong>
+
+            <br>
+
+            maquette d'un musée virtuel
+
+        </div>
+
+    </a>
+
+
+
+    <!-- =================================================
+         02 — PERF
+    ================================================== -->
+
+    <a
+        href="perf.html"
+        class="item image2"
+    >
+
+        <img src="images/datamuseum1.png">
+
+        <div class="hover-text">
+
+            <strong>
+                02 — perf écran
+            </strong>
+
+            <br>
+
+           performance d'écran à travers la construction d'un musée en live
+
+        </div>
+
+    </a>
+
+
+
+    <!-- =================================================
+         03 — JEUX
+    ================================================== -->
+
+    <a
+        href="jeux.html"
+        class="item image3"
+    >
+
+        <img src="images/jeux.png">
+
+        <div class="hover-text">
+
+            <strong>
+                03 — jeux
+            </strong>
+
+            <br>
+
+            Recherche autour du jeu vidéo sur Godot et de la création d'un jeu expérimental.
+
+        </div>
+
+    </a>
+
+
+
+    <!-- =================================================
+         04 — DESSIN
+    ================================================== -->
+
+    <div
+        class="item image4"
+        id="drawing-item"
+    >
+
+        <img
+            src="images/dessin.png"
+            alt="Dessin"
+        >
+
+
+        <div class="hover-text">
+
+            <strong>
+                04 — dessin
+            </strong>
+
+            <br>
+
+            Dessins I, croquis II, planches de BD III 
+
+        </div>
+
+
+        <!-- =============================================
+             PETITS BOUTONS
+        ============================================== -->
+
+        <div class="drawing-menu">
+
+
+            <a
+                href="images/dessin2.html"
+                class="drawing-icon"
+                title="Dessins 1"
+            >
+                01
+            </a>
+
+
+            <a
+                href="images/dessin.html"
+                class="drawing-icon"
+                title="Dessins 2"
+            >
+                02
+            </a>
+
+
+            <a
+                href="images/dessin3.html"
+                class="drawing-icon"
+                title="Dessins 3"
+            >
+                03
+            </a>
+
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =================================================
+         05 — COLLECTION
+    ================================================== -->
+
+    <a
+        href="collection2.html"
+        class="item image5"
+    >
+
+        <img src="images/collection.png">
+
+        <div class="hover-text">
+
+            <strong>
+                05 — collection
+            </strong>
+
+            <br>
+
+            création d'une collection d'archive des musées virtuels glannés sur le web.
+
+        </div>
+
+    </a>
+
+
+
+    <!-- =================================================
+         06 — EXP1
+    ================================================== -->
+
+    <a
+        href="page4.html"
+        class="item image6"
+    >
+
+        <img src="images/exp1.png">
+
+        <div class="hover-text">
+
+            <strong>
+                06 — exp1
+            </strong>
+
+            <br>
+
+            site expérimental, en cours de développement
+
+        </div>
+
+    </a>
+
+
+
+    <!-- =================================================
+         07 — AVATAR
+    ================================================== -->
+
+    <a
+        href="avatar.html"
+        class="item image7"
+    >
+
+        <img src="images/07.jpg">
+
+        <div class="hover-text">
+
+            <strong>
+                07 — exp 2
+            </strong>
+
+            <br>
+
+            en cours 
+
+        </div>
+
+    </a>
+
+
+
+    <!-- =================================================
+         08 — FLUX
+    ================================================== -->
+
+    <a
+        href="flux.html"
+        class="item image8"
+    >
+
+        <img src="images/flux.png">
+
+        <div class="hover-text">
+
+            <strong>
+                08 — flux
+            </strong>
+
+            <br>
+
+            migraines d'images 
+
+        </div>
+
+    </a>
+
+
+
+    <!-- =================================================
+         09 — CARNET
+    ================================================== -->
+
+    <a
+        href="carnet.html"
+        class="item image9"
+    >
+
+        <img src="images/09.jpg">
+
+        <div class="hover-text">
+
+            <strong>
+                09 — carnet en ligne
+            </strong>
+
+            <br>
+
+            carnet de bord, à Linz septembre 2026
+
+        </div>
+
+    </a>
+
+
+
+    <!-- =================================================
+         10 — MEMOIRE
+    ================================================== -->
+
+    <a
+        href="note.html"
+        class="item image10"
+    >
+
+        <img src="images/10.png">
+
+        <div class="hover-text">
+
+            <strong>
+                10 — mémoire
+            </strong>
+
+            <br>
+
+            mémoire de recherche et création, V1
+
+        </div>
+
+    </a>
+
+
+</main>
+
+
+
+<script>
+
+/* =====================================================
+   MENU DESSIN — CLIC
+===================================================== */
+
+const drawingItem =
+    document.getElementById("drawing-item");
+
+
+/*
+   Clic sur dessin.png :
+   ouvre / ferme le menu
+*/
+
+drawingItem.addEventListener(
+    "click",
+    function(e) {
+
+        /*
+         Si on clique sur un des petits boutons,
+         on laisse le lien fonctionner normalement.
+        */
+
+        if (
+            e.target.closest(".drawing-icon")
+        ) {
+
+            return;
+
+        }
+
+
+        /*
+         Si l'image a été déplacée,
+         on ne considère pas ça comme un clic.
+        */
+
+        if (drawingItem.dataset.moved === "true") {
+
+            drawingItem.dataset.moved = "false";
+
+            return;
+
+        }
+
+
+        e.preventDefault();
+
+        e.stopPropagation();
+
+
+        drawingItem.classList.toggle(
+            "show-menu"
+        );
+
+    }
+);
+
+
+/* =====================================================
+   CLIC AILLEURS
+===================================================== */
+
+document.addEventListener(
+    "click",
+    function(e) {
+
+        if (
+            !drawingItem.contains(e.target)
+        ) {
+
+            drawingItem.classList.remove(
+                "show-menu"
+            );
+
+        }
+
+    }
+);
+
+
+/* =====================================================
+   DEPLACEMENT DES IMAGES
+===================================================== */
+
+const items =
+    document.querySelectorAll(".item");
+
+
+items.forEach(function(item) {
+
+
+    let dragging = false;
+
+    let moved = false;
+
+
+    let startX = 0;
+    let startY = 0;
+
+
+    let offsetX = 0;
+    let offsetY = 0;
+
+
+
+    /* ==============================================
+       SOURIS — début
+    ============================================== */
+
+    item.addEventListener(
+        "mousedown",
+        function(e) {
+
+
+            /*
+             Les petits boutons ne doivent
+             pas déclencher le déplacement.
+            */
+
+            if (
+                e.target.closest(".drawing-icon")
+            ) {
+
+                return;
+
+            }
+
+
+            dragging = true;
+
+            moved = false;
+
+
+            startX = e.clientX;
+            startY = e.clientY;
+
+
+            const rect =
+                item.getBoundingClientRect();
+
+
+            offsetX =
+                e.clientX - rect.left;
+
+
+            offsetY =
+                e.clientY - rect.top;
+
+
+            item.style.zIndex = 2000;
+
+        }
+    );
+
+
+
+    /* ==============================================
+       SOURIS — déplacement
+    ============================================== */
+
+    document.addEventListener(
+        "mousemove",
+        function(e) {
+
+
+            if (!dragging) return;
+
+
+            const distanceX =
+                Math.abs(
+                    e.clientX - startX
+                );
+
+
+            const distanceY =
+                Math.abs(
+                    e.clientY - startY
+                );
+
+
+            if (
+                distanceX > 5 ||
+                distanceY > 5
+            ) {
+
+                moved = true;
+
+                item.dataset.moved =
+                    "true";
+
+            }
+
+
+            if (!moved) return;
+
+
+            item.style.left =
+                (
+                    e.clientX - offsetX
+                ) + "px";
+
+
+            item.style.top =
+                (
+                    e.clientY - offsetY
+                ) + "px";
+
+
+        }
+    );
+
+
+
+    /* ==============================================
+       SOURIS — fin
+    ============================================== */
+
+    document.addEventListener(
+        "mouseup",
+        function() {
+
+
+            if (!dragging) return;
+
+
+            dragging = false;
+
+
+        }
+    );
+
+
+});
+
+</script>
+
+
+</body>
+
+</html>

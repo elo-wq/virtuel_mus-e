@@ -1,0 +1,1428 @@
+```html
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>carnet — linz</title>
+
+<style>
+
+*{
+    box-sizing:border-box;
+}
+
+html,
+body{
+    margin:0;
+    padding:0;
+
+    background:#f4f4f1;
+    color:#111;
+
+    font-family:Arial, Helvetica, sans-serif;
+    font-size:13px;
+}
+
+
+/* =========================
+   HEADER
+========================= */
+
+header{
+
+    position:fixed;
+
+    top:0;
+    left:0;
+
+    width:100%;
+
+    padding:12px 15px;
+
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+
+    z-index:1000;
+
+    pointer-events:none;
+
+}
+
+header a{
+
+    pointer-events:auto;
+
+    color:#111;
+    text-decoration:none;
+
+}
+
+header a:hover{
+
+    text-decoration:underline;
+
+}
+
+nav{
+
+    display:flex;
+    gap:18px;
+
+}
+
+
+/* =========================
+   CARNET
+========================= */
+
+.carnet{
+
+    position:relative;
+
+    width:100%;
+    min-height:100vh;
+
+    overflow:hidden;
+
+}
+
+
+/* =========================
+   DATE
+========================= */
+
+.date{
+
+    position:absolute;
+
+    left:15px;
+    top:75px;
+
+    font-size:10px;
+
+}
+
+
+/* =========================
+   INTRO
+========================= */
+
+.intro{
+
+    position:absolute;
+
+    left:15%;
+    top:13%;
+
+    width:340px;
+
+    line-height:1.4;
+
+}
+
+
+.intro p{
+
+    margin:0 0 25px 0;
+
+}
+
+
+/* =========================
+   PHRASE PRINCIPALE
+========================= */
+
+.big-note{
+
+    position:absolute;
+
+    left:42%;
+    top:12%;
+
+    width:300px;
+
+    font-size:18px;
+
+    line-height:1.3;
+
+}
+
+
+/* =========================
+   PETITE NOTE
+========================= */
+
+.note{
+
+    position:absolute;
+
+    width:220px;
+
+    line-height:1.4;
+
+}
+
+
+.note p{
+
+    margin:0 0 15px 0;
+
+}
+
+
+.note.small{
+
+    font-size:10px;
+
+}
+
+
+/* =========================
+   SIGNAL
+========================= */
+
+.signal{
+
+    position:absolute;
+
+    left:8%;
+    top:48%;
+
+    font-family:monospace;
+
+    font-size:12px;
+
+    transform:rotate(-2deg);
+
+}
+
+
+/* =========================
+   IMAGE
+========================= */
+
+.image{
+
+    position:absolute;
+
+}
+
+
+.image img{
+
+    display:block;
+
+    width:100%;
+    height:auto;
+
+}
+
+
+.image:hover img{
+
+    opacity:.7;
+
+}
+
+
+/* =========================
+   IMAGE 01
+========================= */
+
+.image1{
+
+    width:250px;
+
+    left:7%;
+    top:62%;
+
+}
+
+
+/* =========================
+   IMAGE 02
+========================= */
+
+.image2{
+
+    width:180px;
+
+    left:36%;
+    top:52%;
+
+}
+
+
+/* =========================
+   IMAGE 03
+========================= */
+
+.image3{
+
+    width:330px;
+
+    left:65%;
+    top:42%;
+
+}
+
+
+/* =========================
+   IMAGE 04
+========================= */
+
+.image4{
+
+    width:210px;
+
+    left:80%;
+    top:55%;
+
+}
+
+
+/* =========================
+   TEXTE 02
+========================= */
+
+.text2{
+
+    left:48%;
+    top:72%;
+
+    width:300px;
+
+}
+
+
+/* =========================
+   SECTION ARS
+========================= */
+
+.ars{
+
+    position:absolute;
+
+    left:8%;
+    top:88%;
+
+    width:420px;
+
+    line-height:1.45;
+
+}
+
+
+.ars-title{
+
+    font-size:11px;
+
+    margin-bottom:25px;
+
+}
+
+
+.ars p{
+
+    margin:0 0 20px 0;
+
+}
+
+
+/* =========================
+   QUOTE
+========================= */
+
+.quote{
+
+    position:absolute;
+
+    left:57%;
+    top:91%;
+
+    width:350px;
+
+    padding-left:20px;
+
+    border-left:1px solid #111;
+
+    font-style:italic;
+
+    line-height:1.45;
+
+}
+
+
+/* =========================
+   SECOND PAGE / EXTENSION
+========================= */
+
+.continue{
+
+    position:relative;
+
+    min-height:120vh;
+
+    margin-top:0;
+
+    border-top:1px solid #111;
+
+    padding:80px 15px 150px 15px;
+
+}
+
+
+/* =========================
+   SECTION 02
+========================= */
+
+.section2{
+
+    margin-left:5%;
+
+    width:450px;
+
+}
+
+
+.section2-title{
+
+    font-size:16px;
+
+    margin-bottom:50px;
+
+}
+
+
+.section2 p{
+
+    line-height:1.45;
+
+    margin:0 0 25px 0;
+
+}
+
+
+/* =========================
+   IMAGE ARS
+========================= */
+
+.ars-figure{
+
+    position:absolute;
+
+    width:25%;
+
+    right:20%;
+    top:50px;
+
+    margin:0;
+
+}
+
+.ars-figure img{
+
+    display:block;
+
+    width:50%;
+    left:50%;
+
+    transform:translateX(-50%);
+
+}
+
+.ars-figure figcaption{
+
+    margin-top:8px;
+
+    font-size:11px;
+
+    line-height:1.4;
+
+}
+
+
+.text-right{
+
+    position:absolute;
+
+    width:35%;
+
+    right:5%;
+    top:300px;
+
+    font-family:monospace;
+
+    line-height:1.4;
+
+}
+
+
+/* =========================
+   SECTION 03
+========================= */
+
+.section3{
+
+    position:relative;
+
+    margin-top:180px;
+
+    min-height:100vh;
+
+    padding-top:80px;
+
+    border-top:1px solid #111;
+
+}
+
+
+.section3-content{
+
+    margin-left:5%;
+
+    width:450px;
+
+}
+
+
+.section3-title{
+
+    font-size:16px;
+
+    margin-bottom:50px;
+
+}
+
+
+.section3 p{
+
+    line-height:1.45;
+
+    margin:0 0 25px 0;
+
+}
+
+
+.section3-figure{
+
+    position:absolute;
+
+    width:25%;
+
+    right:20%;
+
+    top:80px;
+
+    margin:0;
+
+}
+
+
+.section3-figure img{
+
+    display:block;
+
+    width:100%;
+
+}
+
+
+.section3-figure figcaption{
+
+    margin-top:8px;
+
+    font-size:11px;
+
+    line-height:1.4;
+
+}
+
+
+.section3-note{
+
+    position:absolute;
+
+    width:300px;
+
+    right:10%;
+
+    top:500px;
+
+    font-family:monospace;
+
+    line-height:1.4;
+
+}
+
+
+/* =========================
+   FOOTER
+========================= */
+
+footer{
+
+    position:relative;
+
+    padding:20px 15px;
+
+    border-top:1px solid #111;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    font-size:10px;
+
+}
+
+footer a{
+
+    color:#111;
+    text-decoration:none;
+
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media(max-width:700px){
+
+    .carnet{
+
+        overflow:visible;
+
+        min-height:auto;
+
+        padding-top:60px;
+
+        display:flex;
+
+        flex-direction:column;
+
+    }
+
+
+    .date{
+
+        position:relative;
+
+        top:auto;
+        left:auto;
+
+        margin:0 10px 50px 10px;
+
+    }
+
+
+    .intro,
+    .big-note,
+    .note,
+    .signal,
+    .image,
+    .text2,
+    .ars,
+    .quote{
+
+        position:relative;
+
+        left:auto;
+        top:auto;
+
+        width:auto;
+
+        margin-left:10px;
+        margin-right:10px;
+
+        margin-bottom:70px;
+
+    }
+
+
+    .intro{
+
+        max-width:330px;
+
+    }
+
+
+    .big-note{
+
+        max-width:300px;
+
+        font-size:17px;
+
+        margin-left:25%;
+
+    }
+
+
+    .signal{
+
+        margin-left:15%;
+
+    }
+
+
+    .image img{
+
+        max-width:100%;
+
+    }
+
+
+    .image1,
+    .image2,
+    .image3,
+    .image4{
+
+        width:auto;
+
+    }
+
+
+    .image1 img{
+
+        width:75%;
+
+    }
+
+
+    .image2 img{
+
+        width:60%;
+
+        margin-left:25%;
+
+    }
+
+
+    .image3 img{
+
+        width:100%;
+
+    }
+
+
+    .image4 img{
+
+        width:65%;
+
+        margin-left:35%;
+
+    }
+
+
+    .text2{
+
+        max-width:330px;
+
+        margin-left:25%;
+
+    }
+
+
+    .ars{
+
+        max-width:380px;
+
+    }
+
+
+    .quote{
+
+        max-width:330px;
+
+        margin-left:15%;
+
+    }
+
+
+    .continue{
+
+        min-height:auto;
+
+        padding:70px 10px 100px 10px;
+
+    }
+
+
+    .section2{
+
+        margin-left:15%;
+
+        width:75%;
+
+    }
+
+
+    /* IMAGE ARS SUR MOBILE */
+
+    .ars-figure{
+
+        width:90%;
+
+        margin:30px 0 0 10%;
+
+        transform:none;
+
+    }
+
+
+    .ars-figure img{
+
+        width:100%;
+
+    }
+
+
+    /* SECTION 03 MOBILE */
+
+    .section3{
+
+        min-height:auto;
+
+        margin-top:100px;
+
+        padding:70px 10px 100px 10px;
+
+    }
+
+
+    .section3-content{
+
+        margin-left:15%;
+
+        width:75%;
+
+    }
+
+
+    .section3-figure{
+
+        position:relative;
+
+        width:90%;
+
+        right:auto;
+
+        top:auto;
+
+        margin:60px 0 0 10%;
+
+    }
+
+
+    .section3-note{
+
+        position:relative;
+
+        width:75%;
+
+        right:auto;
+
+        top:auto;
+
+        margin:60px 0 0 15%;
+
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<header>
+
+    <a href="index.html">
+        ELO
+    </a>
+
+    <nav>
+
+        <a href="research.html">
+            research
+        </a>
+
+        <a href="projects.html">
+            projects
+        </a>
+
+        <a href="about.html">
+            about
+        </a>
+
+    </nav>
+
+</header>
+
+
+
+<!-- =========================
+     CARNET
+========================= -->
+
+<main class="carnet">
+
+
+    <div class="date">
+        23.09.2026 — LINZ
+    </div>
+
+
+
+    <!-- INTRO -->
+
+    <div class="intro">
+
+        <p>
+            Chère lecteurice,
+        </p>
+
+        <p>
+            Arrivé à Linz depuis moins de deux semaines,
+            j'explore la ville et ses environs entre
+            églises baroques du XVIIIe, château gothique
+            en Tchéquie, chemins forestiers.
+        </p>
+
+        <p>
+            À peine le temps et on me demande d'écrire
+            sur le lien entre ma mobilité et ma recherche.
+        </p>
+
+    </div>
+
+
+
+    <!-- PHRASE -->
+
+    <div class="big-note">
+
+        J'arpente le paysage,
+        étudie mes déplacements
+        en quête d'un lien
+        <em>(magique)</em>
+        entre les deux.
+
+        <br><br>
+
+        <strong>
+            à la recherche
+            d'un musée virtuel.
+        </strong>
+
+    </div>
+
+
+
+    <!-- NOTE -->
+
+    <div
+        class="note"
+        style="left:78%; top:18%;"
+    >
+
+        <p>
+            moins de deux semaines
+        </p>
+
+        <p>
+            Linz / forêt / église /
+            Tchéquie / ordinateur
+        </p>
+
+    </div>
+
+
+
+    <!-- RETOUR ORDINATEUR -->
+
+    <div
+        class="note"
+        style="left:18%; top:34%;"
+    >
+
+        <p>
+            Je dois ré-ouvrir mon ordinateur
+            avec tous les fichiers que j'avais
+            tenté de mettre en pause durant l'été,
+            de faire disparaître.
+        </p>
+
+    </div>
+
+
+
+    <!-- NOTE -->
+
+    <div
+        class="note small"
+        style="left:55%; top:36%;"
+    >
+
+        écran blanc
+
+        <br>
+
+        souris
+
+        <br><b>VS</b><br>
+
+        feuille blanche
+
+        <br>
+
+        crayon de papier
+
+    </div>
+
+
+
+    <!-- SIGNAL -->
+
+    <div class="signal">
+
+        -...-….-- // ***….._-_-_.₋._-_.!§
+
+    </div>
+
+
+
+    <!-- MIGRAINE -->
+
+    <div
+        class="note"
+        style="left:70%; top:48%;"
+    >
+
+        <p>
+            Migraine du flux
+        </p>
+
+        <p>
+            surgit lors de
+            l'ouverture
+        </p>
+
+    </div>
+
+
+
+    <!-- IMAGE 01 -->
+
+    <div class="image image1">
+
+        <img src="images/carnet/arffs.png">
+
+    </div>
+
+
+
+    <!-- IMAGE 02 -->
+
+    <div class="image image2">
+
+        <img src="images/flux.png">
+
+    </div>
+
+
+
+    <!-- IMAGE 03 -->
+
+    <div class="image image3">
+
+        <img src="images/carnet/111.png">
+
+    </div>
+
+
+
+    <!-- IMAGE 04 -->
+
+    <div class="image image4">
+
+        <img src="images/carnet/1.png">
+
+    </div>
+
+
+
+    <!-- TEXTE -->
+
+    <div class="note text2">
+
+        <p>
+            <i>
+                Le bâtiment avait été vidé puis réaménagé,
+                toutefois.
+
+                Dans le quasi, on voyait des machines retirer
+                les livres d'immenses salles d'archives
+                souterraines.
+
+                Puis des pelles mécaniques les déverser
+                dans les camions.
+
+                Enfin des rouleaux compresseurs les réduire
+                en pâte à papier.
+
+                Le spectateur du quasi conduisait une de
+                ces machines. ^Ursula Le Guin,
+            </i>
+        </p>
+
+    </div>
+
+
+
+    <!-- ARS -->
+
+    <section class="ars">
+
+        <div class="ars-title">
+
+            01 — ARS ELECTRONICA
+
+        </div>
+
+
+        <p>
+            À mon arrivée, un festival d'art numérique
+            se tient dans toute la ville durant 5 jours.
+        </p>
+
+
+        <p>
+            ARS ELECTRONICA
+            → art technology society
+        </p>
+
+
+        <p>
+            /*ars/
+            participe passé masculin de
+            <em>ardre</em>
+            → brûler, être en feu
+        </p>
+
+
+        <p>
+            Le musée se crée en dehors,
+            dans des églises, des écoles,
+            des lieux abandonnés.
+        </p>
+
+
+        <p>
+            31 points à atteindre.
+        </p>
+
+
+        <p>
+            Une overdose d'œuvres en dialogue
+            avec l'intelligence artificielle.
+        </p>
+
+
+        <p>
+            → se retrouver nez à nez avec
+            une IA en train de pleurer
+        </p>
+
+
+        <p>
+            → trouver cela pathétique
+        </p>
+
+    </section>
+
+
+
+    <!-- NOTE JARDIN -->
+
+    <div
+        class="note"
+        style="left:62%; top:108%;"
+    >
+
+        <p>
+            Je vois une œuvre dans laquelle
+            on peut construire son propre
+            jardin numérique.
+        </p>
+
+        <p>
+            Cela me rappelle mon expérimentation :
+        </p>
+
+        <p>
+            <strong>
+                construire un musée virtuel
+                collectif en local
+            </strong>
+        </p>
+
+    </div>
+
+
+
+    <!-- NOTE GENERATION -->
+
+    <div
+        class="note"
+        style="left:15%; top:116%;"
+    >
+
+        <p>
+            Ici le jardin est généré par rapport
+            à la surface, le niveau d'ensoleillement,
+            l'humidité...
+        </p>
+
+        <p>
+            Penser à une forme de musée qui
+            se génère par rapport au spectateur
+            et aux formes que j'ai collectées.
+        </p>
+
+    </div>
+
+
+
+    <!-- PHRASE -->
+
+    <div
+        class="big-note"
+        style="left:48%; top:125%;"
+    >
+
+        Se brûler les yeux.
+
+        <br><br>
+
+        La rétine se noircit à travers
+        le blanc de tous ces écrans
+        allumés 24h/24.
+
+    </div>
+
+
+</main>
+
+
+
+<!-- =========================
+     SUITE
+========================= -->
+
+<section class="continue">
+
+
+    <!-- =========================
+         SECTION 02
+    ========================= -->
+
+    <div class="section2">
+
+        <div class="section2-title">
+
+            02 — une œuvre sur le flux
+            à ARS ELECTRONICA
+
+        </div>
+
+
+        <p>
+            Un écran noir tactile plus grand
+            que moi me fait face.
+            Dessus je peux naviguer dans
+            toutes les archives du festival
+            depuis 1987.
+            Une collection d'œuvres dans un espace 3D.
+        </p>
+
+
+        <p>
+            Un système de base de données IA
+            permet de créer des rapprochements
+            entre les œuvres par une entrée
+            visuelle ou textuelle.
+        </p>
+
+
+        <!-- IMAGE ARS -->
+
+        <figure class="ars-figure">
+
+            <img
+                src="images/carnet/ars.png"
+                alt="Vector Space"
+            >
+
+            <figcaption>
+                Figure :
+                <em>
+                    Vector Space,
+                    prix Ars Electronica Universe
+                </em>
+            </figcaption>
+
+        </figure>
+
+
+        <p class="text-right">
+
+            Une impression de souffle lorsque
+            l'on clique sur une image.
+
+            <br><br>
+
+            -------------        Une masse gigantesque
+            ---------------------         se déplace autour.
+
+        </p>
+
+    </div>
+
+
+
+    <!-- =========================
+         SECTION 03
+    ========================= -->
+
+    <section class="section3">
+
+
+        <div class="section3-content">
+
+            <div class="section3-title">
+
+                03 — le musée comme espace
+                de déplacement
+
+            </div>
+
+
+            <p>
+                Je retrouve ici une question qui
+                traverse ma recherche :
+                comment est-ce que l'on se déplace
+                dans une collection lorsque celle-ci
+                n'est plus organisée comme un espace
+                physique ?
+            </p>
+
+
+            <p>
+                Dans cet espace numérique,
+                je ne regarde plus seulement
+                une œuvre après l'autre.
+                Je me déplace dans un réseau
+                de relations entre les images.
+            </p>
+
+
+            <p>
+                Le musée devient alors moins
+                un bâtiment qu'une cartographie.
+            </p>
+
+
+            <p>
+                Les œuvres apparaissent,
+                disparaissent, se rapprochent
+                ou s'éloignent selon le chemin
+                emprunté.
+            </p>
+
+        </div>
+
+
+
+        <!-- IMAGE SECTION 03 -->
+
+        <figure class="section3-figure">
+
+            <img
+                src="images/carnet/mur.png"
+                alt="Musée virtuel"
+            >
+
+            <figcaption>
+
+                Figure :
+                <em>
+                    espace de navigation,
+                    archive et déplacement
+                </em>
+
+            </figcaption>
+
+        </figure>
+
+
+
+        <!-- NOTE SECTION 03 -->
+
+        <div class="section3-note">
+
+            [ déplacer ]
+
+            <br><br>
+
+            cliquer ≠ marcher
+
+            <br><br>
+
+            regarder ≠ parcourir
+
+            <br><br>
+
+            archive ≠ collection
+
+            <br><br>
+
+            peut-être que le musée
+            commence précisément ici.
+
+        </div>
+
+
+    </section>
+
+
+</section>
+
+
+
+<footer>
+
+    <a href="index.html">
+        ← back
+    </a>
+
+    <span>
+        ELO — carnet en ligne
+    </span>
+
+</footer>
+
+
+</body>
+
+</html>
+```

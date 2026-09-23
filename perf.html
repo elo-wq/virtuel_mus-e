@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Perf écran — ELO</title>
+
+<style>
+
+*{
+    box-sizing:border-box;
+}
+
+html,
+body{
+    margin:0;
+    padding:0;
+    background:#f4f4f1;
+    color:#111;
+    font-family:Arial, Helvetica, sans-serif;
+    font-size:13px;
+}
+
+
+/* =====================================================
+   HEADER
+===================================================== */
+
+header{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    padding:12px 15px;
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    z-index:1000;
+    background:#f4f4f1;
+}
+
+.logo{
+    color:#111;
+    text-decoration:none;
+}
+
+nav{
+    display:flex;
+    gap:18px;
+}
+
+nav a{
+    color:#111;
+    text-decoration:none;
+}
+
+nav a:hover{
+    text-decoration:underline;
+}
+
+
+/* =====================================================
+   PAGE
+===================================================== */
+
+.page{
+    padding:80px 15px 120px 15px;
+}
+
+
+/* =====================================================
+   CONTENU PRINCIPAL
+===================================================== */
+
+.content{
+    display:grid;
+    grid-template-columns:58% 42%;
+    align-items:start;
+}
+
+
+/* =====================================================
+   GRILLE IMAGES
+===================================================== */
+
+.images{
+    padding-right:45px;
+    display:grid;
+    grid-template-columns:repeat(2, 1fr);
+    gap:25px 20px;
+}
+
+.image{
+    position:relative;
+}
+
+.image img{
+    display:block;
+    width:100%;
+    height:auto;
+    cursor:pointer;
+    transition:opacity .2s ease;
+}
+
+.image img:hover{
+    opacity:.65;
+}
+
+.image-number{
+    margin-top:5px;
+    font-size:9px;
+}
+
+
+/* =====================================================
+   IMAGE PERF
+===================================================== */
+
+.perf-image{
+    grid-column:1 / -1;
+    margin-top:20px;
+}
+
+.perf-image img{
+    display:block;
+    width:100%;
+    height:auto;
+}
+
+
+/* =====================================================
+   TEXTE
+===================================================== */
+
+.text{
+    position:sticky;
+    top:80px;
+    padding-left:20px;
+    padding-right:70px;
+    line-height:1.45;
+}
+
+.meta{
+    font-size:10px;
+    margin-bottom:45px;
+}
+
+.text h1{
+    font-size:13px;
+    font-weight:normal;
+    margin:0 0 40px 0;
+}
+
+.text h2{
+    font-size:11px;
+    font-weight:normal;
+    margin:55px 0 20px 0;
+}
+
+.text p{
+    margin:0 0 22px 0;
+}
+
+.page-number{
+    margin-top:45px;
+    margin-bottom:15px;
+    font-size:11px;
+    font-weight:bold;
+}
+
+.change{
+    margin:35px 0 50px 0;
+    font-style:italic;
+}
+
+
+/* =====================================================
+   PHRASES ISOLEES
+===================================================== */
+
+.highlight{
+    margin:35px 0;
+    font-size:15px;
+    line-height:1.35;
+}
+
+.highlight.small{
+    font-size:12px;
+}
+
+
+/* =====================================================
+   NOTE FINALE
+===================================================== */
+
+.final-text{
+    margin-top:80px;
+    padding-top:40px;
+    border-top:1px solid #111;
+}
+
+.final-text p{
+    margin-bottom:25px;
+}
+
+
+/* =====================================================
+   FOOTER
+===================================================== */
+
+footer{
+    margin-top:100px;
+    padding-top:20px;
+    border-top:1px solid #111;
+    display:flex;
+    justify-content:space-between;
+    font-size:10px;
+}
+
+footer a{
+    color:#111;
+    text-decoration:none;
+}
+
+footer a:hover{
+    text-decoration:underline;
+}
+
+
+/* =====================================================
+   MOBILE
+===================================================== */
+
+@media(max-width:700px){
+
+    header{
+        padding:10px;
+    }
+
+    nav{
+        gap:9px;
+        font-size:11px;
+    }
+
+    .page{
+        padding:65px 10px 80px 10px;
+    }
+
+    .content{
+        display:block;
+    }
+
+    .images{
+        padding-right:0;
+        grid-template-columns:repeat(2, 1fr);
+        gap:12px;
+        margin-bottom:70px;
+    }
+
+    .image-number{
+        font-size:8px;
+    }
+
+    .perf-image{
+        grid-column:1 / -1;
+        margin-top:10px;
+    }
+
+    .text{
+        position:relative;
+        top:auto;
+        padding:0 10px;
+    }
+
+    .text h1{
+        margin-bottom:30px;
+    }
+
+    .page-number{
+        margin-top:40px;
+    }
+
+    .highlight{
+        font-size:14px;
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     HEADER
+===================================================== -->
+
+<header>
+
+    <a href="index.html" class="logo">
+        ELO
+    </a>
+
+    <nav>
+
+        <a href="research.html">
+            research
+        </a>
+
+        <a href="projects.html">
+            projects
+        </a>
+
+        <a href="about.html">
+            about
+        </a>
+
+    </nav>
+
+</header>
+
+
+
+<!-- =====================================================
+     PAGE
+===================================================== -->
+
+<main class="page">
+
+
+    <div class="content">
+
+
+        <!-- =================================================
+             IMAGES — 2 × 2 + PERF.JPG
+        ================================================== -->
+
+        <section class="images">
+
+
+            <div class="image">
+
+                <img src="images/datamuseum4.png">
+
+                <div class="image-number">
+                    01
+                </div>
+
+            </div>
+
+
+            <div class="image">
+
+                <img src="images/datamuseum2.png">
+
+                <div class="image-number">
+                    02
+                </div>
+
+            </div>
+
+
+            <div class="image">
+
+                <img src="images/datamuseum3.png">
+
+                <div class="image-number">
+                    03
+                </div>
+
+            </div>
+
+
+            <div class="image">
+
+                <img src="images/datamuseum1.png">
+
+                <div class="image-number">
+                    04
+                </div>
+
+            </div>
+
+
+            <!-- IMAGE PERF EN DESSOUS -->
+
+            <div class="perf-image">
+
+                <img src="images/perf.jpg">
+
+            </div>
+
+
+        </section>
+
+
+
+        <!-- =================================================
+             TEXTE
+        ================================================== -->
+
+        <section class="text">
+
+
+            <div class="meta">
+
+                01 — expérimentation
+
+                <br>
+
+                perf écran
+
+                <br>
+
+                2026
+
+            </div>
+
+
+
+            <h1>
+                performer le musée virtuel
+            </h1>
+
+
+
+            <!-- PAGE 1 -->
+
+            <div class="page-number">
+                PAGE 1
+            </div>
+
+
+            <p>
+                Je construis des murs dans un espace vide.
+                Lorsque j’ouvre la page, tout est blanc.
+                Je m’aventure dans cet espace en déambulant
+                à la recherche d’un signe, d’un indice.
+                J’appuie sur une touche de mon clavier,
+                des images se mettent à tomber.
+            </p>
+
+
+            <p>
+                Je regarde la pluie d’images tomber devant moi.
+                Je me retrouve submergée face à ce flux d’images ;
+                les images passent devant moi sans que je puisse
+                les voir totalement.
+            </p>
+
+
+            <p>
+                Elles s’accumulent sur le sol.
+            </p>
+
+
+            <div class="change">
+                Je change de page.
+            </div>
+
+
+
+            <!-- PAGE 2 -->
+
+            <div class="page-number">
+                PAGE 2
+            </div>
+
+
+            <p>
+                Je déambule entre les murs et les images,
+                les idées s’associent.
+            </p>
+
+            <p>
+                Un labyrinthe se crée.
+                J’y crée une forme de parallèle entre les
+                salons d’exposition du XIXe siècle et les
+                murs d’images sur Internet.
+            </p>
+
+
+            <div class="change">
+                Je change de page.
+            </div>
+
+
+
+            <!-- PAGE 3 -->
+
+            <div class="page-number">
+                PAGE 3
+            </div>
+
+
+            <p>
+                Je me retrouve face à des cubes gris que je
+                remplis d’images.
+                Les images se superposent les unes aux autres,
+                créant de nouvelles fenêtres et interprétations.
+                Je cherche à questionner le white cube
+                sur Internet.
+            </p>
+
+
+            <div class="change">
+                Je change de page.
+            </div>
+
+
+
+            <!-- PAGE 4 -->
+
+            <div class="page-number">
+                PAGE 4
+            </div>
+
+
+            <p>
+                Une sphère d’images flotte devant moi avec
+                des centaines d’images à l’intérieur.
+                Une forme de tourbillon émerge quand je
+                m’avance à l’intérieur.
+            </p>
+
+
+            <div class="highlight">
+                à la recherche du Musée Virtuel
+            </div>
+
+
+
+            <!-- TEXTE FINAL -->
+
+            <div class="final-text">
+
+
+                <p>
+                    J’ai codé plusieurs pages comme une
+                    déambulation dans un musée virtuel,
+                    en passant d’onglet à onglet.
+                    
+                    Le but est de performer cette déambulation
+                    en plusieurs temps à travers mon écran.
+                </p>
+
+
+                <p>
+                    En direct, je construis et j’aménage
+                    cet espace vide blanc. Je place des
+                    cimaises, des cubes, des images.
+                    Je crée du lien entre les images et
+                    les formes.
+                </p>
+
+
+                <p>
+                    Ce parcours reprend le cheminement de ma
+                    pensée sur le musée virtuel en le
+                    spatialisant dans un espace virtuel.
+                </p>
+
+
+                <p>
+                    Je pioche dans mon dossier
+                    « musée virtuel », où j’ai récolté
+                    des centaines d’images sur ce thème.
+                </p>
+
+
+                <p>
+                    Après avoir rencontré Clémence Canet,
+                    doctorante à Paris 8, qui travaille sur
+                    la visite performée, ce musée virtuel
+                    prendrait la forme d’une visite performée
+                    en deux temps.
+                </p>
+
+
+                <p>
+                    Un premier temps où je performe ma
+                    recherche dans le musée virtuel,
+                    accompagnée d’une voix.
+                </p>
+
+
+                <p>
+                    Un deuxième temps où je performe in situ
+                    mes gestes, mes déplacements.
+                </p>
+
+
+                <div class="highlight">
+                    J’incarne l’avatar de mon musée virtuel.
+                </div>
+
+
+                <p>
+                    L’espace virtuel serait délimité dans
+                    l’espace physique de la performance,
+                    comme dans le film
+                    <em>Dogville</em> de Lars von Trier (2003),
+                    avec des scotchs de couleur par exemple.
+                </p>
+
+
+            </div>
+
+
+        </section>
+
+
+    </div>
+
+
+
+    <!-- =================================================
+         FOOTER
+    ================================================== -->
+
+    <footer>
+
+        <a href="index.html">
+            ← back
+        </a>
+
+        <span>
+            ELO — perf écran
+        </span>
+
+    </footer>
+
+
+</main>
+
+
+</body>
+
+</html>

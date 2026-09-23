@@ -1,0 +1,1106 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Drawings — ELO</title>
+
+
+<style>
+
+/* =========================
+   GENERAL
+========================= */
+
+*{
+    box-sizing:border-box;
+}
+
+html,
+body{
+    margin:0;
+    padding:0;
+
+    background:#f4f4f1;
+    color:#111;
+
+    font-family:Arial, Helvetica, sans-serif;
+
+    font-size:13px;
+}
+
+
+/* =========================
+   HEADER
+========================= */
+
+header{
+
+    position:fixed;
+
+    top:0;
+    left:0;
+
+    width:100%;
+
+    padding:12px 15px;
+
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+
+    z-index:1000;
+
+    background:#f4f4f1;
+}
+
+.logo{
+
+    color:#111;
+    text-decoration:none;
+
+}
+
+nav{
+
+    display:flex;
+    gap:18px;
+
+}
+
+nav a{
+
+    color:#111;
+    text-decoration:none;
+
+}
+
+nav a:hover{
+
+    text-decoration:underline;
+
+}
+
+
+/* =========================
+   PAGE
+========================= */
+
+.page{
+
+    padding-top:80px;
+
+    padding-left:15px;
+    padding-right:15px;
+
+    padding-bottom:100px;
+
+}
+
+
+/* =========================
+   INTRO
+========================= */
+
+.intro{
+
+    display:grid;
+
+    grid-template-columns:
+        40px
+        200px
+        1fr;
+
+    gap:20px;
+
+    margin-bottom:80px;
+
+}
+
+.intro-number{
+
+    font-size:11px;
+
+}
+
+.intro-title{
+
+    font-size:13px;
+
+}
+
+.intro-text{
+
+    max-width:420px;
+
+    line-height:1.4;
+
+}
+
+.intro-text p{
+
+    margin:0;
+
+}
+
+
+/* =========================
+   SERIES
+========================= */
+
+.series{
+
+    margin-bottom:150px;
+
+}
+
+
+/* =========================
+   SERIES HEADER
+========================= */
+
+.series-header{
+
+    display:grid;
+
+    grid-template-columns:
+        40px
+        200px
+        1fr;
+
+    gap:20px;
+
+    margin-bottom:35px;
+
+}
+
+.series-number{
+
+    font-size:11px;
+
+}
+
+.series-title{
+
+    margin:0;
+
+    font-size:13px;
+
+    font-weight:normal;
+
+}
+
+.series-description{
+
+    max-width:420px;
+
+    font-size:11px;
+
+    line-height:1.4;
+
+}
+
+.series-description p{
+
+    margin:0;
+
+}
+
+
+/* =========================
+   GRILLE
+========================= */
+
+.drawings-grid{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(5, 1fr);
+
+    gap:18px;
+
+    align-items:start;
+
+}
+
+
+/* =========================
+   DESSIN
+========================= */
+
+.drawing{
+
+    position:relative;
+
+}
+
+
+.drawing img{
+
+    display:block;
+
+    width:100%;
+
+    height:auto;
+
+    cursor:pointer;
+
+    transition:
+        transform .2s ease,
+        opacity .2s ease;
+
+}
+
+
+.drawing:hover img{
+
+    transform:scale(1.025);
+
+    opacity:.7;
+
+}
+
+
+/* =========================
+   NUMERO
+========================= */
+
+.drawing-number{
+
+    margin-top:5px;
+
+    font-size:9px;
+
+}
+
+
+/* =========================
+   VISIONNEUSE
+========================= */
+
+.viewer{
+
+    position:fixed;
+
+    top:0;
+    left:0;
+
+    width:100%;
+    height:100%;
+
+    background:#f4f4f1;
+
+    z-index:5000;
+
+    display:none;
+
+    align-items:center;
+    justify-content:center;
+
+}
+
+
+/* IMAGE GRANDE */
+
+.viewer img{
+
+    max-width:85vw;
+    max-height:85vh;
+
+    width:auto;
+    height:auto;
+
+    object-fit:contain;
+
+}
+
+
+/* =========================
+   FERMER
+========================= */
+
+.close{
+
+    position:absolute;
+
+    top:15px;
+    right:15px;
+
+    font-size:13px;
+
+    cursor:pointer;
+
+}
+
+
+/* =========================
+   FLECHES
+========================= */
+
+.arrow{
+
+    position:absolute;
+
+    top:50%;
+
+    transform:translateY(-50%);
+
+    font-size:20px;
+
+    cursor:pointer;
+
+    padding:20px;
+
+    user-select:none;
+
+}
+
+
+.arrow.left{
+
+    left:10px;
+
+}
+
+
+.arrow.right{
+
+    right:10px;
+
+}
+
+
+.arrow:hover{
+
+    opacity:.5;
+
+}
+
+
+/* =========================
+   COMPTEUR
+========================= */
+
+.counter{
+
+    position:absolute;
+
+    bottom:15px;
+    left:15px;
+
+    font-size:10px;
+
+}
+
+
+/* =========================
+   FOOTER
+========================= */
+
+footer{
+
+    padding-top:25px;
+
+    border-top:1px solid #111;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    font-size:11px;
+
+}
+
+footer a{
+
+    color:#111;
+
+    text-decoration:none;
+
+}
+
+footer a:hover{
+
+    text-decoration:underline;
+
+}
+
+
+/* =========================
+   TABLET
+========================= */
+
+@media(max-width:1000px){
+
+    .drawings-grid{
+
+        grid-template-columns:
+            repeat(4, 1fr);
+
+        gap:15px;
+
+    }
+
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media(max-width:600px){
+
+    header{
+
+        padding:10px;
+
+    }
+
+    nav{
+
+        gap:9px;
+
+        font-size:11px;
+
+    }
+
+
+    .page{
+
+        padding-top:65px;
+
+        padding-left:10px;
+        padding-right:10px;
+
+    }
+
+
+    .intro{
+
+        grid-template-columns:
+            30px
+            1fr;
+
+        gap:10px;
+
+        margin-bottom:60px;
+
+    }
+
+
+    .intro-text{
+
+        grid-column:2;
+
+        margin-top:5px;
+
+    }
+
+
+    .series-header{
+
+        grid-template-columns:
+            30px
+            1fr;
+
+        gap:10px;
+
+        margin-bottom:25px;
+
+    }
+
+
+    .series-description{
+
+        grid-column:2;
+
+        margin-top:3px;
+
+    }
+
+
+    .drawings-grid{
+
+        grid-template-columns:
+            repeat(3, 1fr);
+
+        gap:10px;
+
+    }
+
+
+    .drawing-number{
+
+        font-size:8px;
+
+    }
+
+
+    .viewer img{
+
+        max-width:90vw;
+        max-height:80vh;
+
+    }
+
+
+    .arrow{
+
+        font-size:18px;
+
+        padding:15px;
+
+    }
+
+}
+
+
+/* =========================
+   SMALL PHONE
+========================= */
+
+@media(max-width:400px){
+
+    .drawings-grid{
+
+        grid-template-columns:
+            repeat(2, 1fr);
+
+        gap:10px;
+
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- =========================
+     HEADER
+========================= -->
+
+<header>
+
+    <a href="index.html" class="logo">
+        ELO
+    </a>
+
+
+    <nav>
+
+        <a href="research.html">
+            research
+        </a>
+
+        <a href="projects.html">
+            projects
+        </a>
+
+        <a href="about.html">
+            about
+        </a>
+
+    </nav>
+
+</header>
+
+
+
+<!-- =========================
+     PAGE
+========================= -->
+
+<main class="page">
+
+
+    <!-- INTRO -->
+
+    <section class="intro">
+
+
+        <div class="intro-number">
+            II
+        </div>
+
+
+        <div class="intro-title">
+            croquis I, juillet 2026
+        </div>
+
+
+        <div class="intro-text">
+
+            <p>
+               une série de 30 croquis autour du flux d'images, de l'architecture web, du musée en ligne
+               parfois inspirée par Borgès, Paul Otele....
+            </p>
+
+        </div>
+
+
+    </section>
+
+
+
+        <!-- =========================
+             GRILLE
+        ========================= -->
+
+        <div class="drawings-grid">
+
+
+            <div class="drawing" data-index="0">
+                <img src="dessin/1.jpg">
+                <div class="drawing-number">01</div>
+            </div>
+
+
+            <div class="drawing" data-index="1">
+                <img src="dessin/2.jpg">
+                <div class="drawing-number">02</div>
+            </div>
+
+
+            <div class="drawing" data-index="2">
+                <img src="dessin/3.jpg">
+                <div class="drawing-number">03</div>
+            </div>
+
+
+            <div class="drawing" data-index="3">
+                <img src="dessin/4.jpg">
+                <div class="drawing-number">04</div>
+            </div>
+
+
+            <div class="drawing" data-index="4">
+                <img src="dessin/5.jpg">
+                <div class="drawing-number">05</div>
+            </div>
+
+
+            <div class="drawing" data-index="5">
+                <img src="dessin/6.jpg">
+                <div class="drawing-number">06</div>
+            </div>
+
+
+            <div class="drawing" data-index="6">
+                <img src="dessin/7.jpg">
+                <div class="drawing-number">07</div>
+            </div>
+
+
+
+            <div class="drawing" data-index="9">
+                <img src="dessin/10.jpg">
+                <div class="drawing-number">10</div>
+            </div>
+
+
+            <div class="drawing" data-index="10">
+                <img src="dessin/11.jpg">
+                <div class="drawing-number">11</div>
+            </div>
+
+
+            <div class="drawing" data-index="11">
+                <img src="dessin/12.jpg">
+                <div class="drawing-number">12</div>
+            </div>
+
+
+            <div class="drawing" data-index="12">
+                <img src="dessin/13.jpg">
+                <div class="drawing-number">13</div>
+            </div>
+
+
+            <div class="drawing" data-index="13">
+                <img src="dessin/14.jpg">
+                <div class="drawing-number">14</div>
+            </div>
+
+
+            <div class="drawing" data-index="14">
+                <img src="dessin/15.jpg">
+                <div class="drawing-number">15</div>
+            </div>
+
+
+            <div class="drawing" data-index="15">
+                <img src="dessin/16.jpg">
+                <div class="drawing-number">16</div>
+            </div>
+
+
+            <div class="drawing" data-index="16">
+                <img src="dessin/17.jpg">
+                <div class="drawing-number">17</div>
+            </div>
+
+
+            <div class="drawing" data-index="17">
+                <img src="dessin/18.jpg">
+                <div class="drawing-number">18</div>
+            </div>
+
+
+            <div class="drawing" data-index="18">
+                <img src="dessin/19.jpg">
+                <div class="drawing-number">19</div>
+            </div>
+
+
+            <div class="drawing" data-index="19">
+                <img src="dessin/20.jpg">
+                <div class="drawing-number">20</div>
+            </div>
+
+
+            <div class="drawing" data-index="20">
+                <img src="dessin/21.jpg">
+                <div class="drawing-number">21</div>
+            </div>
+
+
+            <div class="drawing" data-index="21">
+                <img src="dessin/22.jpg">
+                <div class="drawing-number">22</div>
+            </div>
+
+
+            <div class="drawing" data-index="22">
+                <img src="dessin/23.jpg">
+                <div class="drawing-number">23</div>
+            </div>
+
+
+            <div class="drawing" data-index="23">
+                <img src="dessin/24.jpg">
+                <div class="drawing-number">24</div>
+            </div>
+
+
+            <div class="drawing" data-index="24">
+                <img src="dessin/25.jpg">
+                <div class="drawing-number">25</div>
+            </div>
+
+
+            <div class="drawing" data-index="25">
+                <img src="dessin/26.jpg">
+                <div class="drawing-number">26</div>
+            </div>
+
+
+            <div class="drawing" data-index="26">
+                <img src="dessin/27.jpg">
+                <div class="drawing-number">27</div>
+            </div>
+
+
+            <div class="drawing" data-index="27">
+                <img src="dessin/28.jpg">
+                <div class="drawing-number">28</div>
+            </div>
+
+
+            <div class="drawing" data-index="28">
+                <img src="dessin/29.jpg">
+                <div class="drawing-number">29</div>
+            </div>
+
+
+            <div class="drawing" data-index="29">
+                <img src="dessin/30.jpg">
+                <div class="drawing-number">30</div>
+            </div>
+
+
+        </div>
+
+    </section>
+
+
+
+    <!-- FOOTER -->
+
+    <footer>
+
+        <a href="index.html">
+            ← back
+        </a>
+
+       <a href="dessin3.html">
+            next →
+        </a>
+
+    </footer>
+
+
+</main>
+
+
+
+<!-- =========================
+     VISIONNEUSE
+========================= -->
+
+<div class="viewer" id="viewer">
+
+
+    <div class="close" id="close">
+        × close
+    </div>
+
+
+    <div class="arrow left" id="previous">
+        ←
+    </div>
+
+
+    <img
+        id="viewer-image"
+        src=""
+        alt=""
+    >
+
+
+    <div class="arrow right" id="next">
+        →
+    </div>
+
+
+    <div class="counter" id="counter">
+        01 / 30
+    </div>
+
+
+</div>
+
+
+
+<script>
+
+/* =========================
+   IMAGES
+========================= */
+
+const images = [];
+
+for(let i = 1; i <= 30; i++){
+
+    images.push("dessin/" + i + ".jpg");
+
+}
+
+
+/* =========================
+   ELEMENTS
+========================= */
+
+const drawings =
+    document.querySelectorAll(".drawing");
+
+const viewer =
+    document.getElementById("viewer");
+
+const viewerImage =
+    document.getElementById("viewer-image");
+
+const close =
+    document.getElementById("close");
+
+const previous =
+    document.getElementById("previous");
+
+const next =
+    document.getElementById("next");
+
+const counter =
+    document.getElementById("counter");
+
+
+let current = 0;
+
+
+/* =========================
+   OUVRIR
+========================= */
+
+drawings.forEach(function(drawing){
+
+    drawing.addEventListener("click", function(){
+
+        current =
+            Number(drawing.dataset.index);
+
+        showImage();
+
+    });
+
+});
+
+
+/* =========================
+   AFFICHER IMAGE
+========================= */
+
+function showImage(){
+
+    viewer.style.display = "flex";
+
+    viewerImage.src =
+        images[current];
+
+    counter.textContent =
+        String(current + 1).padStart(2,"0")
+        + " / "
+        + String(images.length).padStart(2,"0");
+
+}
+
+
+/* =========================
+   IMAGE PRECEDENTE
+========================= */
+
+function previousImage(){
+
+    current--;
+
+    if(current < 0){
+
+        current = images.length - 1;
+
+    }
+
+    showImage();
+
+}
+
+
+/* =========================
+   IMAGE SUIVANTE
+========================= */
+
+function nextImage(){
+
+    current++;
+
+    if(current >= images.length){
+
+        current = 0;
+
+    }
+
+    showImage();
+
+}
+
+
+/* =========================
+   BOUTONS
+========================= */
+
+previous.addEventListener(
+    "click",
+    previousImage
+);
+
+
+next.addEventListener(
+    "click",
+    nextImage
+);
+
+
+/* =========================
+   FERMER
+========================= */
+
+close.addEventListener(
+    "click",
+    function(){
+
+        viewer.style.display = "none";
+
+    }
+);
+
+
+/* =========================
+   CLAVIER
+========================= */
+
+document.addEventListener(
+    "keydown",
+    function(e){
+
+        if(
+            viewer.style.display !== "flex"
+        ){
+
+            return;
+
+        }
+
+
+        if(e.key === "ArrowRight"){
+
+            nextImage();
+
+        }
+
+
+        if(e.key === "ArrowLeft"){
+
+            previousImage();
+
+        }
+
+
+        if(e.key === "Escape"){
+
+            viewer.style.display = "none";
+
+        }
+
+    }
+);
+
+
+/* =========================
+   CLIC EN DEHORS
+========================= */
+
+viewer.addEventListener(
+    "click",
+    function(e){
+
+        if(e.target === viewer){
+
+            viewer.style.display = "none";
+
+        }
+
+    }
+);
+
+</script>
+
+
+</body>
+
+</html>

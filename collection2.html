@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Archive Rhizomatique Stable</title>
+
+<style>
+body {
+  margin: 0;
+  font-family: monospace;
+  background: #fafafa;
+  overflow: hidden;
+  display: flex;
+  height: 100vh;
+}
+
+#canvas-container {
+  flex: 3;
+  position: relative;
+  cursor: grab;
+  height: 100vh;
+  overflow: hidden;
+  user-select: none;
+}
+
+#canvas-container:active {
+  cursor: grabbing;
+}
+
+canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.node {
+  position: absolute;
+  width: 90px;
+  height: 90px;
+  border: 1px solid #000;
+  background: white;
+  cursor: pointer;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  transition: opacity 0.3s ease, transform 0.1s ease;
+}
+
+.node img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.node:hover {
+  box-shadow: 0 0 12px rgba(0,0,0,0.6);
+  z-index: 10 !important;
+}
+
+.node.faded {
+  opacity: 0.1;
+  pointer-events: none;
+}
+
+.right {
+  flex: 1;
+  border-left: 1px solid black;
+  padding: 20px;
+  font-size: 12px;
+  background: white;
+  height: 100vh;
+  overflow-y: auto;
+  box-sizing: border-box;
+  z-index: 5;
+}
+
+.controls {
+  position: fixed;
+  bottom: 15px;
+  left: 15px;
+  z-index: 5;
+  background: rgba(255, 255, 255, 0.95);
+  padding: 12px;
+  border: 1px solid black;
+  max-width: 50%;
+}
+
+button {
+  font-family: monospace;
+  margin: 2px;
+  cursor: pointer;
+  background: white;
+  border: 1px solid black;
+  padding: 3px 6px;
+}
+
+button:hover {
+  background: #000;
+  color: white;
+}
+
+button.active {
+  background: #000;
+  color: white;
+  font-weight: bold;
+}
+</style>
+</head>
+
+<body>
+
+<div id="canvas-container">
+  <canvas id="linksCanvas"></canvas>
+</div>
+
+<div class="right" id="panel">
+SELECTIONNEZ UN NŒUD DU RHIZOME
+</div>
+
+<div class="controls">
+  <strong>TAGS FILTERS</strong><br>
+  <button class="active" onclick="filterTag('all', this)">ALL</button>
+  <button onclick="filterTag('meme', this)">meme</button>
+  <button onclick="filterTag('whitecube', this)">whitecube</button>
+  <button onclick="filterTag('jeu', this)">jeu vidéo</button>
+  <button onclick="filterTag('flux', this)">flux</button>
+  <button onclick="filterTag('histoire', this)">histoire</button>
+  <button onclick="filterTag('gris', this)">gris</button>
+  <button onclick="filterTag('bleu', this)">bleu</button>
+  <button onclick="filterTag('violet', this)">violet</button>
+  <button onclick="filterTag('blanc', this)">blanc</button>
+  <button onclick="filterTag('rose', this)">rose</button>
+  <button onclick="filterTag('jaune', this)">jaune</button>
+  <button onclick="filterTag('rouge', this)">rouge</button>
+  
+  <hr style="border:0; border-top:1px solid black; margin:8px 0;">
+  
+  <button onclick="resetView()">Recadrer la vue</button>
+  <small style="margin-left: 10px;">Drag pour glisser | Molette pour Zoomer (cible le curseur)</small>
+</div>
+
+<script src="data.js"></script>
+
+<script>
+const container = document.getElementById("canvas-container");
+const canvas = document.getElementById("linksCanvas");
+const ctx = canvas.getContext("2d");
+const panel = document.getElementById("panel");
+
+let transform = { x: 0, y: 0, zoom: 0.8 }; 
+let isDragging = false;
+let currentTag = "all";
+
+// --- GESTION DE LA STABILISATION ---
+let energy = 1.0;          // Énergie cinétique du système
+const coolingFactor = 0.98; // Vitesse de refroidissement (plus bas = s'arrête plus vite)
+const minEnergy = 0.005;    // Seuil en dessous duquel on fige les calculs
+
+const nodes = [];
+const links = [];
+
+function resizeCanvas() {
+  canvas.width = container.clientWidth;
+  canvas.height = container.clientHeight;
+}
+window.addEventListener('resize', resizeCanvas);
+resizeCanvas();
+
+function wakeUpPhysics() {
+  energy = 1.0; // Réinjecte de l'énergie pour relancer le mouvement
+}
+
+/* ==========================================
+   INITIALISATION DU GRAPH
+   ========================================== */
+function initRhizome() {
+  data.forEach((imgData, index) => {
+    const angle = (index / data.length) * Math.PI * 2;
+    const radius = 250;
+    nodes.push({
+      id: index,
+      data: imgData,
+      x: canvas.width / 2 + Math.cos(angle) * radius,
+      y: canvas.height / 2 + Math.sin(angle) * radius,
+      vx: 0,
+      vy: 0,
+      element: null
+    });
+  });
+
+  for (let i = 0; i < nodes.length; i++) {
+    for (let j = i + 1; j < nodes.length; j++) {
+      const common = nodes[i].data.tags.filter(t => nodes[j].data.tags.includes(t));
+      if (common.length > 0) {
+        links.push({ source: nodes[i], target: nodes[j], weight: common.length, tags: common });
+      }
+    }
+  }
+
+  nodes.forEach(node => {
+    const div = document.createElement("div");
+    div.className = "node";
+    
+    const img = document.createElement("img");
+    img.src = "./" + node.data.file;
+    div.appendChild(img);
+
+    div.onclick = (e) => {
+      e.stopPropagation();
+      showPanel(node.data);
+    };
+
+    container.appendChild(div);
+    node.element = div;
+  });
+
+  transform.x = canvas.width * 0.1;
+  transform.y = canvas.height * 0.1;
+  wakeUpPhysics();
+}
+
+/* ==========================================
+   MOTEUR PHYSIQUE OPTIMISÉ (ANTI-TREMBLEMENT)
+   ========================================== */
+function updatePhysics() {
+  // Si le système est refroidi (figé), on stoppe les calculs inutiles
+  if (energy < minEnergy) return;
+
+  const kRepulsion = 400;  
+  const kAttraction = 0.03;
+  const damping = 0.65; // Amortissement renforcé (liquide plus visqueux)   
+
+  // 1. Répulsion
+  for (let i = 0; i < nodes.length; i++) {
+    for (let j = i + 1; j < nodes.length; j++) {
+      let dx = nodes[j].x - nodes[i].x;
+      let dy = nodes[j].y - nodes[i].y;
+      let dist = Math.sqrt(dx * dx + dy * dy) || 1;
+      
+      if (dist < 280) {
+        let force = kRepulsion / (dist * dist);
+        // On applique l'énergie globale pour calmer le mouvement
+        nodes[i].vx -= dx * force * energy;
+        nodes[i].vy -= dy * force * energy;
+        nodes[j].vx += dx * force * energy;
+        nodes[j].vy += dy * force * energy;
+      }
+    }
+  }
+
+  // 2. Attraction par les liens
+  links.forEach(link => {
+    let isActiveLink = currentTag === "all" || link.tags.includes(currentTag);
+    let currentAttraction = isActiveLink ? kAttraction : kAttraction * 0.05;
+
+    let dx = link.target.x - link.source.x;
+    let dy = link.target.y - link.source.y;
+    let dist = Math.sqrt(dx * dx + dy * dy) || 1;
+    let desiredDist = 180;
+    
+    // Force proportionnelle à l'écart et pondérée par l'énergie
+    let force = (dist - desiredDist) * currentAttraction * link.weight * energy;
+    
+    let fx = (dx / dist) * force;
+    let fy = (dy / dist) * force;
+
+    link.source.vx += fx;
+    link.source.vy += fy;
+    link.target.vx -= fx;
+    link.target.vy -= fy;
+  });
+
+  // 3. Application du mouvement ralenti
+  nodes.forEach(node => {
+    node.vx *= damping;
+    node.vy *= damping;
+    node.x += node.vx;
+    node.y += node.vy;
+  });
+
+  // 4. Refroidissement progressif
+  energy *= coolingFactor;
+}
+
+/* ==========================================
+   BOUCLE DE RENDU
+   ========================================== */
+function draw() {
+  updatePhysics();
+
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  ctx.save();
+  ctx.translate(transform.x, transform.y);
+  ctx.scale(transform.zoom, transform.zoom);
+
+  links.forEach(link => {
+    let isActiveLink = currentTag === "all" || link.tags.includes(currentTag);
+    ctx.strokeStyle = isActiveLink ? "rgba(0, 0, 0, 0.2)" : "rgba(0, 0, 0, 0.01)";
+    ctx.lineWidth = isActiveLink ? 1.2 : 0.4;
+    
+    ctx.beginPath();
+    ctx.moveTo(link.source.x, link.source.y);
+    ctx.lineTo(link.target.x, link.target.y);
+    ctx.stroke();
+  });
+  
+  ctx.restore();
+
+  nodes.forEach(node => {
+    const screenX = node.x * transform.zoom + transform.x;
+    const screenY = node.y * transform.zoom + transform.y;
+    
+    node.element.style.left = `${screenX}px`;
+    node.element.style.top = `${screenY}px`;
+    node.element.style.transform = `translate(-50%, -50%) scale(${transform.zoom})`;
+  });
+
+  requestAnimationFrame(draw);
+}
+
+/* ==========================================
+   GESTION DU PAN & ZOOM SANS PERTURBER LE GRAPH
+   ========================================= */
+container.addEventListener("mousedown", (e) => {
+  isDragging = true;
+});
+
+window.addEventListener("mousemove", (e) => {
+  if (!isDragging) return;
+  transform.x += e.movementX;
+  transform.y += e.movementY;
+});
+
+window.addEventListener("mouseup", () => { isDragging = false; });
+
+container.addEventListener("wheel", (e) => {
+  e.preventDefault();
+  
+  const zoomIntensity = 0.05;
+  const mouseX = e.clientX - container.offsetLeft;
+  const mouseY = e.clientY - container.offsetTop;
+
+  const wheel = e.deltaY < 0 ? 1 : -1;
+  const zoomFactor = Math.exp(wheel * zoomIntensity);
+  
+  const newZoom = Math.min(Math.max(transform.zoom * zoomFactor, 0.1), 4);
+
+  transform.x = mouseX - (mouseX - transform.x) * (newZoom / transform.zoom);
+  transform.y = mouseY - (mouseY - transform.y) * (newZoom / transform.zoom);
+  transform.zoom = newZoom;
+}, { passive: false });
+
+/* ==========================================
+   FILTRAGE
+   ========================================== */
+function filterTag(tag, buttonEl) {
+  currentTag = tag;
+  
+  document.querySelectorAll(".controls button").forEach(btn => btn.classList.remove("active"));
+  buttonEl.classList.add("active");
+
+  nodes.forEach(node => {
+    if (tag === "all" || node.data.tags.includes(tag)) {
+      node.element.classList.remove("faded");
+    } else {
+      node.element.classList.add("faded");
+    }
+  });
+
+  // Dès qu'on change de tag, on réveille le graphe pour qu'il se réorganise fluidement
+  wakeUpPhysics();
+}
+
+function resetView() {
+  transform = { x: canvas.width * 0.15, y: canvas.height * 0.15, zoom: 0.7 };
+}
+
+function showPanel(imgData) {
+  panel.innerHTML = `
+    <div>
+      <div><strong>FILE</strong> : ${imgData.file}</div>
+      <div><strong>DATE de CAPTURE</strong> : ${imgData.date}</div>
+      <div><strong>DATE</strong> : ${imgData.dateréel}</div>
+      <div><strong>TAGS</strong> : ${imgData.tags.join(", ") || "—"}</div>
+   <div> <strong>SITE</strong> : ${imgData.site ? `<a href="${imgData.site}" target="_blank">${imgData.site}</a>` : "—"}
+</div>
+      <div><strong>AUTEUR</strong> : ${imgData.auteur || "—"}</div>
+      <div style="margin-top:10px;">
+        <strong>NOTE</strong><br>
+        ${imgData.note || "—"}
+      </div>
+      <div style="margin-top:15px;">
+        <img src="./${imgData.file}" style="width:100%; height:auto; border-top:1px solid black; padding-top:10px;">
+      </div>
+    </div>
+  `;
+}
+
+// Démarrage
+initRhizome();
+requestAnimationFrame(draw);
+</script>
+</body>
+</html>
