@@ -1,9 +1,11 @@
 <!DOCTYPE html>
+
 <html lang="fr">
 
 <head>
 
 <meta charset="UTF-8">
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>ELO</title>
@@ -24,10 +26,8 @@ body {
     padding: 0;
     width: 100%;
     height: 100%;
-
     background: #f4f4f1;
     color: #111;
-
     font-family: Arial, Helvetica, sans-serif;
     font-size: 13px;
 }
@@ -39,21 +39,15 @@ body {
 
 header {
     position: fixed;
-
     top: 0;
     left: 0;
-
     width: 100%;
-
     padding: 12px 15px;
-
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
-
     z-index: 1000;
 }
-
 
 .logo {
     color: #111;
@@ -61,18 +55,15 @@ header {
     font-size: 13px;
 }
 
-
 nav {
     display: flex;
     gap: 18px;
 }
 
-
 nav a {
     color: #111;
     text-decoration: none;
 }
-
 
 nav a:hover {
     text-decoration: underline;
@@ -85,19 +76,13 @@ nav a:hover {
 
 .intro {
     position: fixed;
-
     top: 55px;
     left: 15px;
-
     width: 220px;
-
     line-height: 1.35;
-
     z-index: 500;
-
     pointer-events: none;
 }
-
 
 .intro p {
     margin: 0 0 15px 0;
@@ -110,10 +95,8 @@ nav a:hover {
 
 .wall {
     position: relative;
-
     width: 100%;
     height: 100vh;
-
     overflow: hidden;
 }
 
@@ -124,19 +107,13 @@ nav a:hover {
 
 .item {
     position: absolute;
-
     display: block;
-
     color: #111;
     text-decoration: none;
-
     cursor: grab;
-
     user-select: none;
-
     z-index: 10;
 }
-
 
 .item:active {
     cursor: grabbing;
@@ -149,12 +126,9 @@ nav a:hover {
 
 .item img {
     display: block;
-
     width: 100%;
     height: auto;
-
     pointer-events: none;
-
     transition: opacity 0.15s ease;
 }
 
@@ -165,31 +139,21 @@ nav a:hover {
 
 .hover-text {
     position: absolute;
-
     left: 0;
     top: 100%;
-
     width: 240px;
-
     margin-top: 5px;
-
     font-size: 11px;
     line-height: 1.35;
-
     color: #111;
-
     opacity: 0;
-
     pointer-events: none;
-
     transition: opacity 0.15s ease;
 }
-
 
 .item:hover .hover-text {
     opacity: 1;
 }
-
 
 .item:hover > img {
     opacity: 0.65;
@@ -203,33 +167,53 @@ nav a:hover {
 .drawing-menu {
 
     position: absolute;
-
     left: 0;
     top: 100%;
-
     margin-top: 8px;
 
     display: flex;
-
     gap: 6px;
 
     opacity: 0;
-
     pointer-events: none;
 
     transition: opacity 0.15s ease;
-
 }
 
 
-/* menu ouvert */
+/* =====================================================
+   MENU COLLECTION
+===================================================== */
+
+.collection-menu {
+
+    position: absolute;
+    left: 0;
+    top: 100%;
+    margin-top: 8px;
+
+    display: flex;
+    gap: 6px;
+
+    opacity: 0;
+    pointer-events: none;
+
+    transition: opacity 0.15s ease;
+}
+
+
+/* =====================================================
+   MENUS OUVERTS
+===================================================== */
 
 .image4.show-menu .drawing-menu {
-
     opacity: 1;
-
     pointer-events: auto;
+}
 
+.image5.show-menu .collection-menu {
+    opacity: 1;
+    pointer-events: auto;
 }
 
 
@@ -245,33 +229,28 @@ nav a:hover {
     border: 1px solid #111;
 
     background: #f4f4f1;
-
     color: #111;
 
     text-decoration: none;
 
     display: flex;
-
     align-items: center;
     justify-content: center;
 
     font-size: 9px;
 
     cursor: pointer;
-
     user-select: none;
 
     transition:
         background 0.15s ease,
         color 0.15s ease;
-
 }
 
 
 .drawing-icon:hover {
 
     background: #111;
-
     color: #f4f4f1;
 
 }
@@ -287,13 +266,11 @@ nav a:hover {
     top: 12%;
 }
 
-
 .image2 {
     width: 150px;
     left: 52%;
     top: 8%;
 }
-
 
 .image3 {
     width: 220px;
@@ -301,13 +278,11 @@ nav a:hover {
     top: 25%;
 }
 
-
 .image4 {
     width: 130px;
     left: 12%;
     top: 45%;
 }
-
 
 .image5 {
     width: 190px;
@@ -315,13 +290,11 @@ nav a:hover {
     top: 48%;
 }
 
-
 .image6 {
     width: 150px;
     left: 60%;
     top: 55%;
 }
-
 
 .image7 {
     width: 210px;
@@ -329,20 +302,17 @@ nav a:hover {
     top: 62%;
 }
 
-
 .image8 {
     width: 140px;
     left: 22%;
     top: 75%;
 }
 
-
 .image9 {
     width: 170px;
     left: 48%;
     top: 78%;
 }
-
 
 .image10 {
     width: 120px;
@@ -361,29 +331,22 @@ nav a:hover {
         padding: 10px;
     }
 
-
     nav {
         gap: 8px;
         font-size: 11px;
     }
 
-
     .intro {
         position: absolute;
-
         top: 50px;
         left: 10px;
-
         width: 180px;
-
         font-size: 12px;
     }
-
 
     .wall {
         height: 130vh;
     }
-
 
     .image1 {
         width: 130px;
@@ -391,13 +354,11 @@ nav a:hover {
         top: 25%;
     }
 
-
     .image2 {
         width: 110px;
         left: 55%;
         top: 20%;
     }
-
 
     .image3 {
         width: 150px;
@@ -405,13 +366,11 @@ nav a:hover {
         top: 38%;
     }
 
-
     .image4 {
         width: 100px;
         left: 5%;
         top: 45%;
     }
-
 
     .image5 {
         width: 130px;
@@ -419,13 +378,11 @@ nav a:hover {
         top: 52%;
     }
 
-
     .image6 {
         width: 110px;
         left: 25%;
         top: 58%;
     }
-
 
     .image7 {
         width: 140px;
@@ -433,13 +390,11 @@ nav a:hover {
         top: 68%;
     }
 
-
     .image8 {
         width: 100px;
         left: 5%;
         top: 75%;
     }
-
 
     .image9 {
         width: 120px;
@@ -447,25 +402,22 @@ nav a:hover {
         top: 82%;
     }
 
-
     .image10 {
         width: 90px;
         left: 72%;
         top: 88%;
     }
 
-
     .hover-text {
         width: 180px;
         font-size: 10px;
     }
 
-
-    .drawing-menu {
+    .drawing-menu,
+    .collection-menu {
         gap: 5px;
         margin-top: 6px;
     }
-
 
     .drawing-icon {
         width: 27px;
@@ -493,14 +445,13 @@ nav a:hover {
         ELO
     </a>
 
-
     <nav>
 
         <a href="">
             research
         </a>
 
-        <a href="">
+        <a href="https://vuaro.hotglue.me/">
             projects
         </a>
 
@@ -513,7 +464,6 @@ nav a:hover {
 </header>
 
 
-
 <!-- =====================================================
      INTRO
 ===================================================== -->
@@ -521,14 +471,14 @@ nav a:hover {
 <div class="intro">
 
     <p>
+
         virtual museums<br>
         digital spaces<br>
         media archaeology
+
     </p>
 
-
 </div>
-
 
 
 <!-- =====================================================
@@ -543,7 +493,7 @@ nav a:hover {
     ================================================== -->
 
     <a
-   
+        href="maquette.html"
         class="item image1"
     >
 
@@ -562,7 +512,6 @@ nav a:hover {
         </div>
 
     </a>
-
 
 
     <!-- =================================================
@@ -584,12 +533,11 @@ nav a:hover {
 
             <br>
 
-           performance d'écran à travers la construction d'un musée en live
+            performance d'écran à travers la construction d'un musée en live
 
         </div>
 
     </a>
-
 
 
     <!-- =================================================
@@ -597,7 +545,7 @@ nav a:hover {
     ================================================== -->
 
     <a
-     
+        href="jeux.html"
         class="item image3"
     >
 
@@ -616,7 +564,6 @@ nav a:hover {
         </div>
 
     </a>
-
 
 
     <!-- =================================================
@@ -659,7 +606,9 @@ nav a:hover {
                 class="drawing-icon"
                 title="Dessins 1"
             >
+
                 01
+
             </a>
 
 
@@ -668,7 +617,9 @@ nav a:hover {
                 class="drawing-icon"
                 title="Dessins 2"
             >
+
                 02
+
             </a>
 
 
@@ -677,7 +628,9 @@ nav a:hover {
                 class="drawing-icon"
                 title="Dessins 3"
             >
+
                 03
+
             </a>
 
 
@@ -686,14 +639,13 @@ nav a:hover {
     </div>
 
 
-
     <!-- =================================================
          05 — COLLECTION
     ================================================== -->
 
-    <a
-        href="collection2.html"
+    <div
         class="item image5"
+        id="collection-item"
     >
 
         <img src="images/collection.png">
@@ -710,8 +662,39 @@ nav a:hover {
 
         </div>
 
-    </a>
 
+        <!-- =============================================
+             PETITS BOUTONS COLLECTION
+        ============================================== -->
+
+        <div class="collection-menu">
+
+
+            <a
+                href="collection.html"
+                class="drawing-icon"
+                title="collection I"
+            >
+
+                01
+
+            </a>
+
+
+            <a
+                href="collection2.html"
+                class="drawing-icon"
+                title="collection II"
+            >
+
+                02
+
+            </a>
+
+
+        </div>
+
+    </div>
 
 
     <!-- =================================================
@@ -740,32 +723,30 @@ nav a:hover {
     </a>
 
 
-
     <!-- =================================================
          07 — AVATAR
     ================================================== -->
 
     <a
-     
+        href="speedrun.html"
         class="item image7"
     >
 
-        <img src="images/07.jpg">
+        <img src="images_bright1/0001.jpg">
 
         <div class="hover-text">
 
             <strong>
-                07 — exp 2
+                07 — speedrun
             </strong>
 
             <br>
 
-            en cours 
+          speedrun d'un musée en cours de virtualisation. 
 
         </div>
 
     </a>
-
 
 
     <!-- =================================================
@@ -794,7 +775,6 @@ nav a:hover {
     </a>
 
 
-
     <!-- =================================================
          09 — CARNET
     ================================================== -->
@@ -821,13 +801,12 @@ nav a:hover {
     </a>
 
 
-
     <!-- =================================================
          10 — MEMOIRE
     ================================================== -->
 
     <a
-   
+        href="note.html"
         class="item image10"
     >
 
@@ -851,8 +830,8 @@ nav a:hover {
 </main>
 
 
-
 <script>
+
 
 /* =====================================================
    MENU DESSIN — CLIC
@@ -900,11 +879,67 @@ drawingItem.addEventListener(
 
 
         e.preventDefault();
-
         e.stopPropagation();
 
 
         drawingItem.classList.toggle(
+            "show-menu"
+        );
+
+    }
+);
+
+
+/* =====================================================
+   MENU COLLECTION — CLIC
+===================================================== */
+
+const collectionItem =
+    document.getElementById("collection-item");
+
+
+/*
+   Clic sur collection.png :
+   ouvre / ferme le menu
+*/
+
+collectionItem.addEventListener(
+    "click",
+    function(e) {
+
+        /*
+         Si on clique sur un des petits boutons,
+         on laisse le lien fonctionner normalement.
+        */
+
+        if (
+            e.target.closest(".drawing-icon")
+        ) {
+
+            return;
+
+        }
+
+
+        /*
+         Si l'image a été déplacée,
+         on ne considère pas ça comme un clic.
+        */
+
+        if (collectionItem.dataset.moved === "true") {
+
+            collectionItem.dataset.moved = "false";
+
+            return;
+
+        }
+
+
+        e.preventDefault();
+        e.stopPropagation();
+
+
+        collectionItem.classList.toggle(
             "show-menu"
         );
 
@@ -930,6 +965,17 @@ document.addEventListener(
 
         }
 
+
+        if (
+            !collectionItem.contains(e.target)
+        ) {
+
+            collectionItem.classList.remove(
+                "show-menu"
+            );
+
+        }
+
     }
 );
 
@@ -944,19 +990,14 @@ const items =
 
 items.forEach(function(item) {
 
-
     let dragging = false;
-
     let moved = false;
-
 
     let startX = 0;
     let startY = 0;
 
-
     let offsetX = 0;
     let offsetY = 0;
-
 
 
     /* ==============================================
@@ -966,7 +1007,6 @@ items.forEach(function(item) {
     item.addEventListener(
         "mousedown",
         function(e) {
-
 
             /*
              Les petits boutons ne doivent
@@ -983,7 +1023,6 @@ items.forEach(function(item) {
 
 
             dragging = true;
-
             moved = false;
 
 
@@ -1009,7 +1048,6 @@ items.forEach(function(item) {
     );
 
 
-
     /* ==============================================
        SOURIS — déplacement
     ============================================== */
@@ -1017,7 +1055,6 @@ items.forEach(function(item) {
     document.addEventListener(
         "mousemove",
         function(e) {
-
 
             if (!dragging) return;
 
@@ -1061,10 +1098,8 @@ items.forEach(function(item) {
                     e.clientY - offsetY
                 ) + "px";
 
-
         }
     );
-
 
 
     /* ==============================================
@@ -1075,16 +1110,12 @@ items.forEach(function(item) {
         "mouseup",
         function() {
 
-
             if (!dragging) return;
-
 
             dragging = false;
 
-
         }
     );
-
 
 });
 
