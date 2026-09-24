@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+
+<html lang="fr">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>video</title>
+
+<style>
+
+* {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    background: #f4f4f1;
+}
+
+
+/* =====================================================
+   VIDEO
+===================================================== */
+
+.video-container {
+    width: 100%;
+    height: 100vh;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+video {
+    display: block;
+
+    width: 70%;
+    max-width: 1000px;
+    height: auto;
+}
+
+
+/* =====================================================
+   MOBILE
+===================================================== */
+
+@media (max-width: 600px) {
+
+    video {
+        width: 90%;
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<div class="video-container">
+
+    <video
+        src="video.mp4"
+        controls
+        autoplay
+        muted
+        loop
+        playsinline
+    >
+    </video>
+
+</div>
+
+
+</body>
+
+</html>
+
