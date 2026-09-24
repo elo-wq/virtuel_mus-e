@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="fr">
 
@@ -7,7 +6,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>collection</title>
+<title>flux</title>
 
 <style>
 
@@ -44,7 +43,53 @@ header {
 
     z-index: 10;
 
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+
     pointer-events: none;
+}
+
+
+/* =========================
+   PETIT TEXTE
+   ========================= */
+
+.info {
+    max-width: 300px;
+
+    line-height: 1.2;
+}
+
+
+/* =========================
+   BOUTON STOP
+   ========================= */
+
+#stopButton {
+
+    pointer-events: auto;
+
+    border: none;
+
+    background: transparent;
+
+    padding: 0;
+
+    margin: 0;
+
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 13px;
+
+    color: #111;
+
+    cursor: pointer;
+
+    text-decoration: underline;
+}
+
+#stopButton:hover {
+    opacity: 0.5;
 }
 
 
@@ -60,30 +105,38 @@ header {
 
     display: grid;
 
-    grid-template-columns: repeat(12, 1fr);
+    grid-template-columns: repeat(9, 1fr);
 
     gap: 5px;
 }
 
 
 /* =========================
-   IMAGES
+   CASE
    ========================= */
 
-.grid img {
+.cell {
+
+    width: 100%;
+
+    overflow: hidden;
+
+    background: #ddd;
+
+}
+
+
+/* =========================
+   IMAGE
+   ========================= */
+
+.cell img {
 
     display: block;
 
     width: 100%;
     height: auto;
 
-    cursor: pointer;
-
-    transition: opacity 0.15s ease;
-}
-
-.grid img:hover {
-    opacity: 0.65;
 }
 
 
@@ -123,7 +176,15 @@ header {
 
 
 <header>
-    collection
+
+    <div class="info">
+        350 images — flux
+    </div>
+
+    <button id="stopButton">
+        STOP
+    </button>
+
 </header>
 
 
@@ -132,52 +193,155 @@ header {
 
 <script>
 
+
+/* =========================
+   PARAMÈTRES
+   ========================= */
+
+const nombreImages = 350;
+
+const vitesse = 280;
+
+const nombreCellules = 80;
+
+
+/* =========================
+   CRÉATION DE LA GRILLE
+   ========================= */
+
 const grid = document.getElementById("grid");
 
-
-// =========================
-// IMAGES À NE PAS AFFICHER
-// =========================
-
-const excluded = [
-
-    78,
-
-    98,
-    99,
-    100,
-    101,
-    102,
-    103,
-    104, 
-    350
-
-];
+const cellules = [];
 
 
-// =========================
-// CRÉATION DES IMAGES
-// =========================
+for (let i = 0; i < nombreCellules; i++) {
 
-for (let i = 1; i <= 350; i++) {
+    const cell = document.createElement("div");
 
-    // Ne pas afficher les images exclues
-    if (excluded.includes(i)) {
-        continue;
-    }
+    cell.className = "cell";
+
 
     const img = document.createElement("img");
 
-    const numero = String(i).padStart(4, "0");
 
-    img.src = "images_bright1/" + numero + ".jpg";
+    let numero = i + 1;
 
-    img.alt = "image " + i;
 
-    img.loading = "lazy";
+    img.src =
+        "images_bright/" +
+        String(numero).padStart(4, "0") +
+        ".jpg";
 
-    grid.appendChild(img);
+
+    img.alt = "";
+
+
+    cell.appendChild(img);
+
+    grid.appendChild(cell);
+
+
+    cellules.push({
+
+        image: img,
+
+        position: numero
+
+    });
+
 }
+
+
+/* =========================
+   ANIMATION
+   ========================= */
+
+let animation = setInterval(() => {
+
+    cellules.forEach(cell => {
+
+        cell.position++;
+
+
+        if (cell.position > nombreImages) {
+
+            cell.position = 1;
+
+        }
+
+
+        const numero =
+            String(cell.position).padStart(4, "0");
+
+
+        cell.image.src =
+            "images_bright/" +
+            numero +
+            ".jpg";
+
+    });
+
+}, vitesse);
+
+
+/* =========================
+   STOP / PLAY
+   ========================= */
+
+const stopButton =
+    document.getElementById("stopButton");
+
+let stopped = false;
+
+
+stopButton.addEventListener("click", () => {
+
+    if (!stopped) {
+
+        clearInterval(animation);
+
+        stopButton.textContent = "PLAY";
+
+        stopped = true;
+
+    } else {
+
+        animation = setInterval(() => {
+
+            cellules.forEach(cell => {
+
+                cell.position++;
+
+
+                if (cell.position > nombreImages) {
+
+                    cell.position = 1;
+
+                }
+
+
+                const numero =
+                    String(cell.position).padStart(4, "0");
+
+
+                cell.image.src =
+                    "images_bright1/" +
+                    numero +
+                    ".jpg";
+
+            });
+
+        }, vitesse);
+
+
+        stopButton.textContent = "STOP";
+
+        stopped = false;
+
+    }
+
+});
+
 
 </script>
 
