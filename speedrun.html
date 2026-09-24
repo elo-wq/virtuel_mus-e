@@ -1,0 +1,188 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>collection</title>
+
+<style>
+
+* {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+
+    background: #f4f4f1;
+    color: #111;
+
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 13px;
+}
+
+
+/* =========================
+   HEADER
+   ========================= */
+
+header {
+    position: fixed;
+
+    top: 0;
+    left: 0;
+
+    width: 100%;
+
+    padding: 10px;
+
+    z-index: 10;
+
+    pointer-events: none;
+}
+
+
+/* =========================
+   GRILLE
+   ========================= */
+
+.grid {
+
+    width: 100%;
+
+    padding: 45px 10px 10px 10px;
+
+    display: grid;
+
+    grid-template-columns: repeat(12, 1fr);
+
+    gap: 5px;
+}
+
+
+/* =========================
+   IMAGES
+   ========================= */
+
+.grid img {
+
+    display: block;
+
+    width: 100%;
+    height: auto;
+
+    cursor: pointer;
+
+    transition: opacity 0.15s ease;
+}
+
+.grid img:hover {
+    opacity: 0.65;
+}
+
+
+/* =========================
+   TABLETTE
+   ========================= */
+
+@media (max-width: 800px) {
+
+    .grid {
+        grid-template-columns: repeat(5, 1fr);
+        gap: 4px;
+    }
+
+}
+
+
+/* =========================
+   MOBILE
+   ========================= */
+
+@media (max-width: 500px) {
+
+    .grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 3px;
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<header>
+    collection
+</header>
+
+
+<div class="grid" id="grid"></div>
+
+
+<script>
+
+const grid = document.getElementById("grid");
+
+
+// =========================
+// IMAGES À NE PAS AFFICHER
+// =========================
+
+const excluded = [
+
+    78,
+
+    98,
+    99,
+    100,
+    101,
+    102,
+    103,
+    104, 
+    350
+
+];
+
+
+// =========================
+// CRÉATION DES IMAGES
+// =========================
+
+for (let i = 1; i <= 350; i++) {
+
+    // Ne pas afficher les images exclues
+    if (excluded.includes(i)) {
+        continue;
+    }
+
+    const img = document.createElement("img");
+
+    const numero = String(i).padStart(4, "0");
+
+    img.src = "images_bright1/" + numero + ".jpg";
+
+    img.alt = "image " + i;
+
+    img.loading = "lazy";
+
+    grid.appendChild(img);
+}
+
+</script>
+
+
+</body>
+
+</html>
+
