@@ -1,352 +1,249 @@
 <!DOCTYPE html>
 <html lang="fr">
-
 <head>
-
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>flux</title>
-
-<style>
-
-* {
-    box-sizing: border-box;
-}
-
-html,
-body {
-    margin: 0;
-    padding: 0;
-
-    background: #f4f4f1;
-    color: #111;
-
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 13px;
-}
-
-
-/* =========================
-   HEADER
-   ========================= */
-
-header {
-    position: fixed;
-
-    top: 0;
-    left: 0;
-
-    width: 100%;
-
-    padding: 10px;
-
-    z-index: 10;
-
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-
-    pointer-events: none;
-}
-
-
-/* =========================
-   PETIT TEXTE
-   ========================= */
-
-.info {
-    max-width: 300px;
-
-    line-height: 1.2;
-}
-
-
-/* =========================
-   BOUTON STOP
-   ========================= */
-
-#stopButton {
-
-    pointer-events: auto;
-
-    border: none;
-
-    background: transparent;
-
-    padding: 0;
-
-    margin: 0;
-
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 13px;
-
-    color: #111;
-
-    cursor: pointer;
-
-    text-decoration: underline;
-}
-
-#stopButton:hover {
-    opacity: 0.5;
-}
-
-
-/* =========================
-   GRILLE
-   ========================= */
-
-.grid {
-
-    width: 100%;
-
-    padding: 45px 10px 10px 10px;
-
-    display: grid;
-
-    grid-template-columns: repeat(9, 1fr);
-
-    gap: 5px;
-}
-
-
-/* =========================
-   CASE
-   ========================= */
-
-.cell {
-
-    width: 100%;
-
-    overflow: hidden;
-
-    background: #ddd;
-
-}
-
-
-/* =========================
-   IMAGE
-   ========================= */
-
-.cell img {
-
-    display: block;
-
-    width: 100%;
-    height: auto;
-
-}
-
-
-/* =========================
-   TABLETTE
-   ========================= */
-
-@media (max-width: 800px) {
-
-    .grid {
-        grid-template-columns: repeat(5, 1fr);
-        gap: 4px;
-    }
-
-}
-
-
-/* =========================
-   MOBILE
-   ========================= */
-
-@media (max-width: 500px) {
-
-    .grid {
-        grid-template-columns: repeat(3, 1fr);
-        gap: 3px;
-    }
-
-}
-
-</style>
-
-</head>
-
-
-<body>
-
-
-<header>
-
-    <div class="info">
-        350 images — flux
-    </div>
-
-    <button id="stopButton">
-        STOP
-    </button>
-
-</header>
-
-
-<div class="grid" id="grid"></div>
-
-
-<script>
-
-
-/* =========================
-   PARAMÈTRES
-   ========================= */
-
-const nombreImages = 350;
-
-const vitesse = 280;
-
-const nombreCellules = 80;
-
-
-/* =========================
-   CRÉATION DE LA GRILLE
-   ========================= */
-
-const grid = document.getElementById("grid");
-
-const cellules = [];
-
-
-for (let i = 0; i < nombreCellules; i++) {
-
-    const cell = document.createElement("div");
-
-    cell.className = "cell";
-
-
-    const img = document.createElement("img");
-
-
-    let numero = i + 1;
-
-
-    img.src =
-        "images_bright/" +
-        String(numero).padStart(4, "0") +
-        ".jpg";
-
-
-    img.alt = "";
-
-
-    cell.appendChild(img);
-
-    grid.appendChild(cell);
-
-
-    cellules.push({
-
-        image: img,
-
-        position: numero
-
-    });
-
-}
-
-
-/* =========================
-   ANIMATION
-   ========================= */
-
-let animation = setInterval(() => {
-
-    cellules.forEach(cell => {
-
-        cell.position++;
-
-
-        if (cell.position > nombreImages) {
-
-            cell.position = 1;
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>flux — 349 images</title>
+    <style>
+        * {
+            box-sizing: border-box;
         }
 
+        html, body {
+            margin: 0;
+            padding: 0;
+            background: #f4f4f1;
+            color: #111;
+            font-family: Arial, sans-serif;
+            font-size: 13px;
+        }
 
-        const numero =
-            String(cell.position).padStart(4, "0");
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 15px;
+            background: #f4f4f1;
+            z-index: 1000;
+            border-bottom: 1px solid #e0e0dc;
+        }
 
+        button {
+            border: none;
+            background: none;
+            font-family: Arial, sans-serif;
+            font-size: 13px;
+            cursor: pointer;
+            padding: 5px 10px;
+        }
 
-        cell.image.src =
-            "images_bright/" +
-            numero +
-            ".jpg";
+        button:hover {
+            text-decoration: underline;
+        }
 
-    });
+        .grid {
+            padding: 50px 10px 10px 10px;
+            display: grid;
+            grid-template-columns: repeat(10, 1fr);
+            gap: 4px;
+        }
 
-}, vitesse);
+        .cell {
+            width: 100%;
+            aspect-ratio: 1 / 1;
+            overflow: hidden;
+            background: #e0e0dc;
+        }
 
+        .cell img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
 
-/* =========================
-   STOP / PLAY
-   ========================= */
+        #loading {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: #f4f4f1;
+            z-index: 2000;
+            font-size: 13px;
+            padding: 20px;
+            text-align: center;
+        }
 
-const stopButton =
-    document.getElementById("stopButton");
+        @media (max-width: 900px) {
+            .grid {
+                grid-template-columns: repeat(6, 1fr);
+            }
+        }
 
-let stopped = false;
+        @media (max-width: 600px) {
+            .grid {
+                grid-template-columns: repeat(4, 1fr);
+                gap: 3px;
+                padding: 45px 5px 5px 5px;
+            }
+        }
+    </style>
+</head>
+<body>
 
+    <header>
+        <div class="info">349 images — flux</div>
+        <button id="stop">STOP</button>
+    </header>
 
-stopButton.addEventListener("click", () => {
+    <div id="loading">
+        Chargement : <span id="progress">0</span> / 349
+    </div>
 
-    if (!stopped) {
+    <div class="grid" id="grid"></div>
 
-        clearInterval(animation);
+    <script>
+        const nombreImages = 349;
+        const nombreCellules = 80;
+        const vitesse = 1000; // millisecondes par image
 
-        stopButton.textContent = "PLAY";
+        const images = [];
+        const cellules = [];
+        let chargees = 0;
+        let animation = null;
+        let dernierTemps = 0;
+        let enLecture = true;
 
-        stopped = true;
+        function chargerImage(numero) {
+            return new Promise((resolve) => {
+                const img = new Image();
+                const numeroImage = String(numero).padStart(4, "0");
+                
+                // Utilisation d'un chemin relatif compatible GitHub Pages
+                img.src = `images_bright1/${numeroImage}.jpg`;
 
-    } else {
+                img.onload = () => {
+                    chargees++;
+                    document.getElementById("progress").textContent = chargees;
+                    resolve(img);
+                };
 
-        animation = setInterval(() => {
-
-            cellules.forEach(cell => {
-
-                cell.position++;
-
-
-                if (cell.position > nombreImages) {
-
-                    cell.position = 1;
-
-                }
-
-
-                const numero =
-                    String(cell.position).padStart(4, "0");
-
-
-                cell.image.src =
-                    "images_bright1/" +
-                    numero +
-                    ".jpg";
-
+                img.onerror = () => {
+                    console.warn(`Image introuvable : ${numeroImage}.jpg`);
+                    chargees++;
+                    document.getElementById("progress").textContent = chargees;
+                    resolve(null);
+                };
             });
+        }
 
-        }, vitesse);
+        async function chargerToutesLesImages() {
+            const tailleGroupe = 8; // Légèrement augmenté pour aller un peu plus vite tout évitant le rate limit
 
+            for (let debut = 1; debut <= nombreImages; debut += tailleGroupe) {
+                const groupe = [];
+                for (let i = debut; i < debut + tailleGroupe && i <= nombreImages; i++) {
+                    groupe.push(chargerImage(i));
+                }
+                const resultat = await Promise.all(groupe);
+                for (const img of resultat) {
+                    if (img) {
+                        images.push(img);
+                    }
+                }
+            }
 
-        stopButton.textContent = "STOP";
+            document.getElementById("loading").style.display = "none";
+            
+            if (images.length > 0) {
+                creerGrille();
+            } else {
+                document.getElementById("loading").style.display = "block";
+                document.getElementById("loading").textContent = "Erreur : aucune image chargée.";
+            }
+        }
 
-        stopped = false;
+        function creerGrille() {
+            const grid = document.getElementById("grid");
+            grid.innerHTML = "";
 
-    }
+            for (let i = 0; i < nombreCellules; i++) {
+                const cell = document.createElement("div");
+                cell.className = "cell";
 
-});
+                const image = document.createElement("img");
+                let position = i % images.length;
+                image.src = images[position].src;
 
+                cell.appendChild(image);
+                grid.appendChild(cell);
 
-</script>
+                cellules.push({
+                    element: cell,
+                    image: image,
+                    position: position
+                });
+            }
 
+            demarrerAnimation();
+        }
 
+        function avancer() {
+            for (const cellule of cellules) {
+                cellule.position = (cellule.position + 1) % images.length;
+                cellule.image.src = images[cellule.position].src;
+            }
+        }
+
+        // Utilisation d'une boucle temporelle fluide
+        function bouclerAnimation(tempsActuel) {
+            if (!enLecture) return;
+
+            if (!dernierTemps) dernierTemps = tempsActuel;
+            const écoulé = tempsActuel - dernierTemps;
+
+            if (écoulé >= vitesse) {
+                avancer();
+                dernierTemps = tempsActuel;
+            }
+
+            animation = requestAnimationFrame(bouclerAnimation);
+        }
+
+        function demarrerAnimation() {
+            if (!animation) {
+                dernierTemps = 0;
+                animation = requestAnimationFrame(bouclerAnimation);
+            }
+        }
+
+        function arreterAnimation() {
+            if (animation) {
+                cancelAnimationFrame(animation);
+                animation = null;
+            }
+        }
+
+        const bouton = document.getElementById("stop");
+        bouton.addEventListener("click", () => {
+            if (enLecture) {
+                arreterAnimation();
+                bouton.textContent = "PLAY";
+                enLecture = false;
+            } else {
+                enLecture = true;
+                demarrerAnimation();
+                bouton.textContent = "STOP";
+            }
+        });
+
+        // Lancement au chargement de la page
+        chargerToutesLesImages();
+    </script>
 </body>
-
 </html>
-
