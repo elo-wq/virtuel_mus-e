@@ -7,18 +7,794 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>carnet — linz</title>
+<title>collection</title>
+
+<style>
+
+* {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    min-height: 100%;
+    background: #f4f4f1;
+    color: #111;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 13px;
+}
 
 
+/* =========================
+   HEADER
+========================= */
 
-    <div class="image image2">
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 12px 15px;
 
-        <img src="images/flux.png">
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+
+    z-index: 100;
+}
+
+header a {
+    color: #111;
+    text-decoration: none;
+}
+
+nav {
+    display: flex;
+    gap: 18px;
+}
+
+nav a:hover {
+    text-decoration: underline;
+}
+
+
+/* =========================
+   INTRODUCTION
+========================= */
+
+.intro {
+    width: 100%;
+    padding: 70px 15px 50px 15px;
+
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 30px;
+
+    align-items: start;
+}
+
+
+/* IMAGE INTRO */
+
+.intro-image {
+    width: 100%;
+}
+
+.intro-image img {
+    width: 100%;
+    height: auto;
+    display: block;
+
+    cursor: pointer;
+}
+
+
+/* TEXTE INTRO */
+
+.intro-text {
+    padding-top: 5px;
+    max-width: 300px;
+    line-height: 1.35;
+}
+
+
+/* =========================
+   GRILLE
+========================= */
+
+.grid {
+    width: 100%;
+    padding: 0 15px 15px 15px;
+
+    display: grid;
+
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, auto);
+
+    gap: 15px;
+}
+
+
+/* =========================
+   CASE
+========================= */
+
+.item {
+    position: relative;
+    width: 100%;
+
+    overflow: hidden;
+
+    background: #ddd;
+
+    text-decoration: none;
+    color: #111;
+
+    cursor: pointer;
+}
+
+
+/* =========================
+   IMAGE
+========================= */
+
+.item img {
+    width: 100%;
+    height: auto;
+
+    display: block;
+
+    object-fit: cover;
+
+    transition: opacity 0.15s ease;
+}
+
+.item:hover img {
+    opacity: 0.75;
+}
+
+
+/* =========================
+   LIGHTBOX
+========================= */
+
+.lightbox {
+
+    position: fixed;
+
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 100%;
+
+    background: rgba(244, 244, 241, 0.96);
+
+    z-index: 1000;
+
+    opacity: 0;
+    visibility: hidden;
+
+    transition: opacity 0.2s ease;
+
+    overflow: hidden;
+
+}
+
+
+/* LIGHTBOX OUVERTE */
+
+.lightbox.active {
+
+    opacity: 1;
+    visibility: visible;
+
+}
+
+
+/* =========================
+   CONTENEUR IMAGE
+========================= */
+
+.lightbox-content {
+
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    padding: 40px 50px;
+
+}
+
+
+/* IMAGE AGRANDIE */
+
+.lightbox img {
+
+    max-width: 92vw;
+    max-height: 88vh;
+
+    width: auto;
+    height: auto;
+
+    object-fit: contain;
+
+    display: block;
+
+    cursor: pointer;
+
+}
+
+
+/* =========================
+   BOUTON FERMER
+========================= */
+
+.lightbox-close {
+
+    position: fixed;
+
+    top: 12px;
+    right: 15px;
+
+    font-size: 20px;
+
+    line-height: 1;
+
+    cursor: pointer;
+
+    z-index: 1002;
+
+}
+
+
+/* =========================
+   INDICATION
+========================= */
+
+.lightbox-info {
+
+    position: fixed;
+
+    bottom: 12px;
+    left: 15px;
+
+    z-index: 1002;
+
+    font-size: 13px;
+
+    pointer-events: none;
+
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 600px) {
+
+    .intro {
+
+        grid-template-columns: 1fr;
+
+        gap: 15px;
+
+        padding: 60px 8px 35px 8px;
+
+    }
+
+    .intro-text {
+
+        max-width: none;
+
+    }
+
+    .grid {
+
+        grid-template-columns: repeat(2, 1fr);
+
+        gap: 8px;
+
+        padding: 0 8px 8px 8px;
+
+    }
+
+    .lightbox-content {
+
+        padding: 30px 10px;
+
+    }
+
+    .lightbox img {
+
+        max-width: 96vw;
+
+        max-height: 88vh;
+
+    }
+
+}
+
+
+/* =========================
+   DESKTOP
+========================= */
+
+@media (min-width: 601px) {
+
+    .lightbox img {
+
+        transition: transform 0.15s ease;
+
+    }
+
+    
+footer{
+
+    position:relative;
+
+    padding:20px 15px;
+
+    border-top:1px solid #111;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    font-size:10px;
+
+}
+
+footer a{
+
+    color:#111;
+    text-decoration:none;
+
+}
+
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- =========================
+     HEADER
+========================= -->
+
+<header>
+
+    <a href="index.html">
+        ELO
+    </a>
+
+    <nav>
+
+        <a href="">
+            research
+        </a>
+
+        <a href="https://vuaro.hotglue.me/">
+            projects
+        </a>
+
+        <a href="">
+            about
+        </a>
+
+    </nav>
+
+</header>
+
+
+<!-- =========================
+     INTRODUCTION
+========================= -->
+
+<section class="intro">
+
+    <div class="intro-image">
+
+        <img
+            src="images/flux/Capture d'écran 2026-09-24 141809.png"
+            class="clickable-image"
+        >
 
     </div>
 
 
+    <div class="intro-text">
 
+        <p>
+            migraine d'image II, 24 septembre 2026
+        </p>
+
+        <p>
+            itérations II
+            le bureau comme espace virtuel d'exposition
+        </p>
+
+        <p>
+            absence d'images, flux, motifs
+        </p>
+
+        <p>
+            2026
+        </p>
+
+    </div>
+
+</section>
+
+
+
+<!-- =========================
+     GRILLE
+========================= -->
+
+<main class="grid">
+
+
+    <!-- 01 -->
+
+    <a href="#" class="item">
+
+        <img src="images/flux/Capture d'écran 2026-09-24 140329.png">
+
+    </a>
+
+
+    <!-- 02 -->
+
+    <a href="#" class="item">
+
+        <img src="images/flux/Capture d'écran 2026-09-24 140502.png">
+
+    </a>
+
+
+    <!-- 03 -->
+
+    <a href="#" class="item">
+
+        <img src="images/flux/Capture d'écran 2026-09-24 140615.png">
+
+    </a>
+
+
+    <!-- 04 -->
+
+    <a href="#" class="item">
+
+        <img src="images/flux/Capture d'écran 2026-09-24 140803.png">
+
+    </a>
+
+
+    <!-- 05 -->
+
+    <a href="#" class="item">
+
+        <img src="images/flux/Capture d'écran 2026-09-24 140953.png">
+
+    </a>
+
+
+    <!-- 06 -->
+
+    <a href="#" class="item">
+
+        <img src="images/flux/Capture d'écran 2026-09-24 141243.png">
+
+    </a>
+
+
+    <!-- 07 -->
+
+    <a href="#" class="item">
+
+        <img src="images/flux/Capture d'écran 2026-09-24 141256.png">
+
+    </a>
+
+
+    <!-- 08 -->
+
+    <a href="#" class="item">
+
+        <img src="images/flux/Capture d'écran 2026-09-24 141331.png">
+
+    </a>
+
+
+    <!-- 09 -->
+
+    <a href="#" class="item">
+
+        <img src="images/flux/Capture d'écran 2026-09-24 141534.png">
+
+    </a>
+
+
+    <!-- 10 -->
+
+    <a href="#" class="item">
+
+        <img src="images/flux/Capture d'écran 2026-09-24 144328.png">
+
+    </a>
+
+
+        <a href="#" class="item">
+
+        <img src="images/flux/Capture d'écran 2026-09-24 144421.png">
+
+    </a>
+
+        <a href="#" class="item">
+
+        <img src="images/flux/Capture d'écran 2026-09-24 144401.png">
+
+    </a>
+
+</main>
+
+
+
+<!-- =========================
+     LIGHTBOX
+========================= -->
+
+<div class="lightbox" id="lightbox">
+
+    <div class="lightbox-close" id="lightboxClose">
+        ×
+    </div>
+
+
+    <div class="lightbox-content">
+
+        <img id="lightboxImage" src="">
+
+    </div>
+
+
+    <div class="lightbox-info" id="lightboxInfo">
+
+        1 / 11
+
+    </div>
+
+</div>
+
+
+
+<script>
+
+
+/* =========================
+   RÉCUPÉRATION DES IMAGES
+========================= */
+
+const imageElements = document.querySelectorAll(
+    ".intro-image img, .grid img"
+);
+
+const lightbox = document.getElementById("lightbox");
+
+const lightboxImage = document.getElementById("lightboxImage");
+
+const lightboxClose = document.getElementById("lightboxClose");
+
+const lightboxInfo = document.getElementById("lightboxInfo");
+
+
+/* =========================
+   INDEX ACTUEL
+========================= */
+
+let currentIndex = 0;
+
+
+/* =========================
+   OUVRIR UNE IMAGE
+========================= */
+
+function openImage(index) {
+
+    if (index < 0) {
+        index = imageElements.length - 1;
+    }
+
+    if (index >= imageElements.length) {
+        index = 0;
+    }
+
+    currentIndex = index;
+
+    lightboxImage.src = imageElements[currentIndex].src;
+
+    lightboxInfo.textContent =
+        (currentIndex + 1) + " / " + imageElements.length;
+
+    lightbox.classList.add("active");
+
+    document.body.style.overflow = "hidden";
+
+}
+
+
+/* =========================
+   FERMER
+========================= */
+
+function closeLightbox() {
+
+    lightbox.classList.remove("active");
+
+    document.body.style.overflow = "";
+
+}
+
+
+/* =========================
+   IMAGE CLIQUÉE
+========================= */
+
+imageElements.forEach(function(image, index) {
+
+    image.addEventListener("click", function(event) {
+
+        event.preventDefault();
+
+        openImage(index);
+
+    });
+
+});
+
+
+/* =========================
+   IMAGE SUIVANTE
+========================= */
+
+function nextImage() {
+
+    openImage(currentIndex + 1);
+
+}
+
+
+/* =========================
+   IMAGE PRÉCÉDENTE
+========================= */
+
+function previousImage() {
+
+    openImage(currentIndex - 1);
+
+}
+
+
+/* =========================
+   SCROLL
+========================= */
+
+let scrolling = false;
+
+lightbox.addEventListener(
+    "wheel",
+    function(event) {
+
+        event.preventDefault();
+
+        if (scrolling) {
+            return;
+        }
+
+        scrolling = true;
+
+
+        if (event.deltaY > 0) {
+
+            nextImage();
+
+        } else {
+
+            previousImage();
+
+        }
+
+
+        setTimeout(function() {
+
+            scrolling = false;
+
+        }, 400);
+
+    },
+    { passive: false }
+);
+
+
+/* =========================
+   CLAVIER
+========================= */
+
+document.addEventListener("keydown", function(event) {
+
+    if (!lightbox.classList.contains("active")) {
+        return;
+    }
+
+
+    if (event.key === "Escape") {
+
+        closeLightbox();
+
+    }
+
+
+    if (event.key === "ArrowDown" ||
+        event.key === "ArrowRight") {
+
+        nextImage();
+
+    }
+
+
+    if (event.key === "ArrowUp" ||
+        event.key === "ArrowLeft") {
+
+        previousImage();
+
+    }
+
+});
+
+
+/* =========================
+   FERMER AVEC LE ×
+========================= */
+
+lightboxClose.addEventListener("click", function(event) {
+
+    event.stopPropagation();
+
+    closeLightbox();
+
+});
+
+
+/* =========================
+   CLIQUER À CÔTÉ DE L'IMAGE
+========================= */
+
+lightbox.addEventListener("click", function(event) {
+
+    if (event.target === lightbox) {
+
+        closeLightbox();
+
+    }
+
+});
+
+
+</script>
 
 
 <footer>
@@ -28,12 +804,11 @@
     </a>
 
     <span>
-        ELO — carnet en ligne
+       migraine d'image II, 24 septembre 2026
     </span>
 
 </footer>
-
-
 </body>
 
 </html>
+
