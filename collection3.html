@@ -1,0 +1,1692 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title> collection d'images - archiver ma recherche d'un musée virtuel</title>
+
+<style>
+
+/* =========================================================
+   BASE
+   ========================================================= */
+
+*{
+    box-sizing:border-box;
+}
+
+html,
+body{
+    margin:0;
+    padding:0;
+    width:100%;
+    height:100%;
+    overflow:hidden;
+}
+
+body{
+    background:#f4f4f1;
+    color:#111;
+    font-family:Arial, Helvetica, sans-serif;
+    font-size:12px;
+}
+
+
+/* =========================================================
+   ESPACE 3D
+   ========================================================= */
+
+#canvas-container{
+    position:relative;
+    width:calc(100% - 280px);
+    height:100vh;
+    overflow:hidden;
+    cursor:grab;
+    user-select:none;
+    background:#f4f4f1;
+}
+
+#canvas-container:active{
+    cursor:grabbing;
+}
+
+canvas{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    pointer-events:none;
+}
+
+
+/* =========================================================
+   IMAGES / NŒUDS
+   ========================================================= */
+
+.node{
+    position:absolute;
+
+    width:76px;
+    height:76px;
+
+    border:1px solid #111;
+    background:#f4f4f1;
+
+    overflow:hidden;
+
+    cursor:pointer;
+
+    transform-origin:center center;
+
+    transition:
+        opacity .35s ease,
+        filter .25s ease;
+
+    z-index:2;
+}
+
+.node img{
+    display:block;
+
+    width:100%;
+    height:100%;
+
+    object-fit:cover;
+
+    pointer-events:none;
+}
+
+.node:hover{
+    filter:brightness(1.2)
+}
+
+.node.faded{
+    opacity:.04 !important;
+    pointer-events:none;
+}
+
+
+/* =========================================================
+   PANNEAU LATÉRAL
+   ========================================================= */
+
+.right{
+    position:fixed;
+
+    top:0;
+    right:0;
+
+    width:280px;
+    height:100vh;
+
+    padding:18px;
+
+    border-left:1px solid #111;
+
+    background:#f4f4f1;
+
+    overflow-y:auto;
+
+    z-index:20;
+}
+
+.right::-webkit-scrollbar{
+    width:6px;
+}
+
+.right::-webkit-scrollbar-track{
+    background:#f4f4f1;
+}
+
+.right::-webkit-scrollbar-thumb{
+    background:#111;
+}
+
+
+/* état initial */
+
+.panel-empty{
+    position:absolute;
+
+    top:18px;
+    left:18px;
+    right:18px;
+
+    line-height:1.4;
+
+    color:#777;
+}
+
+
+/* informations */
+
+.panel-info{
+    line-height:1.45;
+}
+
+.panel-row{
+    margin-bottom:5px;
+}
+
+.panel-label{
+    display:inline-block;
+
+    min-width:80px;
+
+    font-size:10px;
+    text-transform:uppercase;
+}
+
+.panel-image{
+    display:block;
+
+    width:100%;
+    height:auto;
+
+    margin-top:22px;
+
+    border-top:1px solid #111;
+    padding-top:10px;
+}
+
+.panel-note{
+    margin-top:20px;
+    padding-top:10px;
+
+    border-top:1px solid #111;
+
+    line-height:1.5;
+}
+
+
+/* =========================================================
+   FILTRES
+   ========================================================= */
+
+.controls{
+    position:fixed;
+
+    left:18px;
+    bottom:18px;
+
+    z-index:30;
+
+    max-width:calc(100% - 320px);
+
+    font-size:11px;
+    line-height:1.8;
+
+    pointer-events:none;
+}
+
+.controls-title{
+    margin-bottom:3px;
+
+    font-size:10px;
+    text-transform:uppercase;
+
+    color:#777;
+}
+
+.controls button{
+    appearance:none;
+
+    margin:0 7px 0 0;
+    padding:0;
+
+    border:0;
+
+    background:none;
+
+    color:#111;
+
+    font-family:Arial, Helvetica, sans-serif;
+    font-size:11px;
+
+    text-decoration:none;
+
+    cursor:pointer;
+
+    pointer-events:auto;
+}
+
+.controls button::before{
+    content:"[";
+}
+
+.controls button::after{
+    content:"]";
+}
+
+.controls button:hover{
+    text-decoration:underline;
+}
+
+.controls button.active{
+    text-decoration:underline;
+}
+
+.controls-separator{
+    display:block;
+
+    margin:3px 0;
+}
+
+
+/* =========================================================
+   INDICATIONS
+   ========================================================= */
+
+.instructions{
+    position:fixed;
+
+    left:18px;
+    top:18px;
+
+    z-index:30;
+
+    pointer-events:none;
+
+    font-size:10px;
+    line-height:1.4;
+
+    color:#777;
+}
+
+.instructions strong{
+    color:#111;
+    font-weight:normal;
+}
+
+
+/* =========================================================
+   PETIT TITRE
+   ========================================================= */
+
+.archive-title{
+    position:fixed;
+
+    left:50%;
+    top:18px;
+
+    transform:translateX(-50%);
+
+    z-index:30;
+
+    font-size:10px;
+
+    text-transform:uppercase;
+
+    pointer-events:none;
+
+    mix-blend-mode:multiply;
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media(max-width:700px){
+
+    body{
+        overflow:auto;
+    }
+
+    #canvas-container{
+        width:100%;
+        height:75vh;
+    }
+
+    .right{
+        position:relative;
+
+        width:100%;
+        height:25vh;
+
+        border-left:0;
+        border-top:1px solid #111;
+    }
+
+    .controls{
+        left:12px;
+        bottom:12px;
+
+        max-width:90%;
+
+        background:#f4f4f1;
+    }
+
+    .instructions{
+        left:12px;
+        top:12px;
+    }
+
+    .archive-title{
+        top:12px;
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- =======================================================
+     ESPACE 3D
+     ======================================================= -->
+
+<div id="canvas-container">
+
+    <canvas id="linksCanvas"></canvas>
+
+</div>
+
+
+<!-- =======================================================
+     TITRE
+     ======================================================= -->
+
+<div class="archive-title">
+    archive d'un musée virtuel
+</div>
+
+
+<!-- =======================================================
+     INDICATIONS
+     ======================================================= -->
+
+<div class="instructions">
+
+    déplacer — rotation<br>
+    molette — zoom<br>
+    cliquer — ouvrir
+
+</div>
+
+
+<!-- =======================================================
+     PANNEAU
+     ======================================================= -->
+
+<div class="right" id="panel">
+
+    <div class="panel-empty">
+
+        cliquez sur une image <br>
+    
+
+    </div>
+
+</div>
+
+
+<!-- =======================================================
+     FILTRES
+     ======================================================= -->
+
+<div class="controls">
+
+    <div class="controls-title">
+        parcourir par tags
+    </div>
+
+    <button class="active"
+            onclick="filterTag('all', this)">
+        all
+    </button>
+
+    <button onclick="filterTag('meme', this)">
+        meme
+    </button>
+
+    <button onclick="filterTag('whitecube', this)">
+        whitecube
+    </button>
+
+    <button onclick="filterTag('jeu', this)">
+        jeu vidéo
+    </button>
+
+    <button onclick="filterTag('flux', this)">
+        flux
+    </button>
+
+    <button onclick="filterTag('histoire', this)">
+        histoire
+    </button>
+
+    <button onclick="filterTag('gris', this)">
+        gris
+    </button>
+
+    <button onclick="filterTag('bleu', this)">
+        bleu
+    </button>
+
+    <button onclick="filterTag('violet', this)">
+        violet
+    </button>
+
+    <button onclick="filterTag('blanc', this)">
+        blanc
+    </button>
+
+    <button onclick="filterTag('rose', this)">
+        rose
+    </button>
+
+    <button onclick="filterTag('jaune', this)">
+        jaune
+    </button>
+
+    <button onclick="filterTag('rouge', this)">
+        rouge
+    </button>
+
+    <span class="controls-separator"></span>
+
+    <button onclick="resetView()">
+        recadrer
+    </button>
+
+</div>
+
+
+<!-- =======================================================
+     DONNÉES
+     ======================================================= -->
+
+<script src="data.js"></script>
+
+
+<script>
+
+/* =========================================================
+   VARIABLES
+   ========================================================= */
+
+const container =
+    document.getElementById("canvas-container");
+
+const canvas =
+    document.getElementById("linksCanvas");
+
+const ctx =
+    canvas.getContext("2d");
+
+const panel =
+    document.getElementById("panel");
+
+
+/* =========================================================
+   CAMÉRA
+   ========================================================= */
+
+let camera = {
+
+    distance:800,
+
+    rotX:0.3,
+
+    rotY:0.5,
+
+    zoom:1,
+
+    offsetX:0,
+
+    offsetY:0,
+
+    targetOffsetX:0,
+
+    targetOffsetY:0
+
+};
+
+
+/* =========================================================
+   INTERACTION
+   ========================================================= */
+
+let isDragging = false;
+
+let startX = 0;
+let startY = 0;
+
+let currentTag = "all";
+
+
+/* =========================================================
+   PHYSIQUE
+   ========================================================= */
+
+let energy = 1;
+
+const coolingFactor = 0.98;
+
+const minEnergy = 0.005;
+
+
+/* =========================================================
+   STRUCTURE
+   ========================================================= */
+
+const nodes = [];
+
+const links = [];
+
+
+/* =========================================================
+   CANVAS
+   ========================================================= */
+
+function resizeCanvas(){
+
+    canvas.width =
+        container.clientWidth;
+
+    canvas.height =
+        container.clientHeight;
+
+}
+
+window.addEventListener(
+    "resize",
+    resizeCanvas
+);
+
+resizeCanvas();
+
+
+/* =========================================================
+   RÉACTIVER LA PHYSIQUE
+   ========================================================= */
+
+function wakeUpPhysics(){
+
+    energy = 1;
+
+}
+
+
+/* =========================================================
+   INITIALISATION DU RHIZOME
+   ========================================================= */
+
+function initRhizome(){
+
+    data.forEach((imgData, index) => {
+
+        const phi =
+            Math.acos(
+                -1 +
+                (2 * index) /
+                data.length
+            );
+
+        const theta =
+            Math.sqrt(
+                data.length *
+                Math.PI
+            ) * phi;
+
+        const radius = 300;
+
+
+        nodes.push({
+
+            id:index,
+
+            data:imgData,
+
+            x:
+                radius *
+                Math.cos(theta) *
+                Math.sin(phi),
+
+            y:
+                radius *
+                Math.sin(theta) *
+                Math.sin(phi),
+
+            z:
+                radius *
+                Math.cos(phi),
+
+            vx:0,
+
+            vy:0,
+
+            vz:0,
+
+            element:null
+
+        });
+
+    });
+
+
+    /* ---------------------------------------------
+       CRÉATION DES LIENS
+       --------------------------------------------- */
+
+    for(
+        let i = 0;
+        i < nodes.length;
+        i++
+    ){
+
+        for(
+            let j = i + 1;
+            j < nodes.length;
+            j++
+        ){
+
+            const common =
+                nodes[i].data.tags.filter(
+                    tag =>
+                        nodes[j].data.tags.includes(tag)
+                );
+
+
+            if(common.length > 0){
+
+                links.push({
+
+                    source:nodes[i],
+
+                    target:nodes[j],
+
+                    weight:common.length,
+
+                    tags:common
+
+                });
+
+            }
+
+        }
+
+    }
+
+
+    /* ---------------------------------------------
+       CRÉATION DES IMAGES
+       --------------------------------------------- */
+
+    nodes.forEach(node => {
+
+        const div =
+            document.createElement("div");
+
+        div.className = "node";
+
+
+        const img =
+            document.createElement("img");
+
+        img.src =
+            "./" + node.data.file;
+
+        img.alt =
+            "";
+
+
+        div.appendChild(img);
+
+
+        div.onclick = function(e){
+
+            e.stopPropagation();
+
+            showPanel(node.data);
+
+        };
+
+
+        container.appendChild(div);
+
+        node.element = div;
+
+    });
+
+
+    wakeUpPhysics();
+
+}
+
+
+/* =========================================================
+   PHYSIQUE
+   ========================================================= */
+
+function updatePhysics(){
+
+    if(energy < minEnergy){
+
+        return;
+
+    }
+
+
+    const kRepulsion = 50000;
+
+    const kAttraction = 0.02;
+
+    const damping = 0.7;
+
+
+    /* ---------------------------------------------
+       RÉPULSION
+       --------------------------------------------- */
+
+    for(
+        let i = 0;
+        i < nodes.length;
+        i++
+    ){
+
+        for(
+            let j = i + 1;
+            j < nodes.length;
+            j++
+        ){
+
+            let dx =
+                nodes[j].x -
+                nodes[i].x;
+
+            let dy =
+                nodes[j].y -
+                nodes[i].y;
+
+            let dz =
+                nodes[j].z -
+                nodes[i].z;
+
+
+            let dist =
+                Math.sqrt(
+                    dx * dx +
+                    dy * dy +
+                    dz * dz
+                ) || 1;
+
+
+            if(dist < 350){
+
+                let force =
+                    kRepulsion /
+                    (dist * dist * dist);
+
+
+                nodes[i].vx -=
+                    dx *
+                    force *
+                    energy;
+
+                nodes[i].vy -=
+                    dy *
+                    force *
+                    energy;
+
+                nodes[i].vz -=
+                    dz *
+                    force *
+                    energy;
+
+
+                nodes[j].vx +=
+                    dx *
+                    force *
+                    energy;
+
+                nodes[j].vy +=
+                    dy *
+                    force *
+                    energy;
+
+                nodes[j].vz +=
+                    dz *
+                    force *
+                    energy;
+
+            }
+
+        }
+
+    }
+
+
+    /* ---------------------------------------------
+       ATTRACTION DES LIENS
+       --------------------------------------------- */
+
+    links.forEach(link => {
+
+        const isActiveLink =
+            currentTag === "all" ||
+            link.tags.includes(currentTag);
+
+
+        const currentAttraction =
+            isActiveLink
+                ? kAttraction
+                : kAttraction * 0.02;
+
+
+        let dx =
+            link.target.x -
+            link.source.x;
+
+        let dy =
+            link.target.y -
+            link.source.y;
+
+        let dz =
+            link.target.z -
+            link.source.z;
+
+
+        let dist =
+            Math.sqrt(
+                dx * dx +
+                dy * dy +
+                dz * dz
+            ) || 1;
+
+
+        const desiredDist = 200;
+
+
+        let force =
+            (dist - desiredDist) *
+            currentAttraction *
+            link.weight *
+            energy;
+
+
+        let fx =
+            (dx / dist) * force;
+
+        let fy =
+            (dy / dist) * force;
+
+        let fz =
+            (dz / dist) * force;
+
+
+        link.source.vx += fx;
+        link.source.vy += fy;
+        link.source.vz += fz;
+
+        link.target.vx -= fx;
+        link.target.vy -= fy;
+        link.target.vz -= fz;
+
+    });
+
+
+    /* ---------------------------------------------
+       DÉPLACEMENT
+       --------------------------------------------- */
+
+    nodes.forEach(node => {
+
+        node.vx *= damping;
+        node.vy *= damping;
+        node.vz *= damping;
+
+        node.x += node.vx;
+        node.y += node.vy;
+        node.z += node.vz;
+
+    });
+
+
+    energy *= coolingFactor;
+
+}
+
+
+/* =========================================================
+   PROJECTION 3D → 2D
+   ========================================================= */
+
+function project(x, y, z){
+
+    const cosY =
+        Math.cos(camera.rotY);
+
+    const sinY =
+        Math.sin(camera.rotY);
+
+
+    const x1 =
+        x * cosY -
+        z * sinY;
+
+    const z1 =
+        x * sinY +
+        z * cosY;
+
+
+    const y1 = y;
+
+
+    const cosX =
+        Math.cos(camera.rotX);
+
+    const sinX =
+        Math.sin(camera.rotX);
+
+
+    const y2 =
+        y1 * cosX -
+        z1 * sinX;
+
+    const z2 =
+        y1 * sinX +
+        z1 * cosX;
+
+
+    const x2 = x1;
+
+
+    const distanceZ =
+        camera.distance + z2;
+
+
+    const fov =
+        400 * camera.zoom;
+
+
+    const scale =
+        fov /
+        (
+            distanceZ > 1
+                ? distanceZ
+                : 1
+        );
+
+
+    const screenX =
+        canvas.width / 2 +
+        camera.offsetX +
+        x2 * scale;
+
+
+    const screenY =
+        canvas.height / 2 +
+        camera.offsetY +
+        y2 * scale;
+
+
+    return {
+
+        x:screenX,
+
+        y:screenY,
+
+        scale:scale,
+
+        depth:z2,
+
+        rotX2:x2,
+
+        rotY2:y2,
+
+        rotZ2:z2
+
+    };
+
+}
+
+
+/* =========================================================
+   RENDU
+   ========================================================= */
+
+function draw(){
+
+    updatePhysics();
+
+
+    /* ---------------------------------------------
+       DÉPLACEMENT DOUX DE LA CAMÉRA
+       --------------------------------------------- */
+
+    camera.offsetX +=
+        (
+            camera.targetOffsetX -
+            camera.offsetX
+        ) * 0.1;
+
+
+    camera.offsetY +=
+        (
+            camera.targetOffsetY -
+            camera.offsetY
+        ) * 0.1;
+
+
+    ctx.clearRect(
+        0,
+        0,
+        canvas.width,
+        canvas.height
+    );
+
+
+    /* ---------------------------------------------
+       PROJECTION DES NŒUDS
+       --------------------------------------------- */
+
+    let projectedNodes =
+        nodes.map(node => {
+
+            const p =
+                project(
+                    node.x,
+                    node.y,
+                    node.z
+                );
+
+
+            return {
+
+                node:node,
+
+                p:p
+
+            };
+
+        });
+
+
+    projectedNodes.sort(
+        (a,b) =>
+            a.p.depth -
+            b.p.depth
+    );
+
+
+    /* ---------------------------------------------
+       LIENS
+       --------------------------------------------- */
+
+    links.forEach(link => {
+
+        const p1 =
+            project(
+                link.source.x,
+                link.source.y,
+                link.source.z
+            );
+
+
+        const p2 =
+            project(
+                link.target.x,
+                link.target.y,
+                link.target.z
+            );
+
+
+        const isActiveLink =
+            currentTag === "all" ||
+            link.tags.includes(currentTag);
+
+
+        const avgDepthFactor =
+            Math.max(
+                0.1,
+                (p1.scale + p2.scale) * 0.8
+            );
+
+
+        /*
+         * Ligne volontairement très discrète.
+         */
+
+        ctx.strokeStyle =
+            isActiveLink
+                ? `rgba(0,0,0,${0.16 * avgDepthFactor})`
+                : `rgba(0,0,0,0.015)`;
+
+
+        ctx.lineWidth =
+            isActiveLink
+                ? 0.7 * avgDepthFactor
+                : 0.3;
+
+
+        ctx.beginPath();
+
+        ctx.moveTo(
+            p1.x,
+            p1.y
+        );
+
+        ctx.lineTo(
+            p2.x,
+            p2.y
+        );
+
+        ctx.stroke();
+
+    });
+
+
+    /* ---------------------------------------------
+       IMAGES
+       --------------------------------------------- */
+
+    projectedNodes.forEach(
+        ({node,p}) => {
+
+            node.element.style.left =
+                `${p.x}px`;
+
+
+            node.element.style.top =
+                `${p.y}px`;
+
+
+            node.element.style.transform =
+                `
+                translate(-50%, -50%)
+                scale(${Math.max(
+                    0.2,
+                    p.scale
+                )})
+                `;
+
+
+            node.element.style.zIndex =
+                Math.floor(
+                    p.depth + 1000
+                );
+
+
+            if(
+                !node.element.classList.contains(
+                    "faded"
+                )
+            ){
+
+                node.element.style.opacity =
+                    Math.max(
+                        0.28,
+                        Math.min(
+                            1,
+                            p.scale * 1.15
+                        )
+                    );
+
+            }
+
+        }
+    );
+
+
+    requestAnimationFrame(draw);
+
+}
+
+
+/* =========================================================
+   ROTATION
+   ========================================================= */
+
+container.addEventListener(
+    "mousedown",
+    function(e){
+
+        isDragging = true;
+
+        startX = e.clientX;
+
+        startY = e.clientY;
+
+    }
+);
+
+
+window.addEventListener(
+    "mousemove",
+    function(e){
+
+        if(!isDragging){
+
+            return;
+
+        }
+
+
+        const deltaX =
+            e.clientX - startX;
+
+        const deltaY =
+            e.clientY - startY;
+
+
+        camera.rotY +=
+            deltaX * 0.008;
+
+
+        camera.rotX -=
+            deltaY * 0.008;
+
+
+        startX = e.clientX;
+
+        startY = e.clientY;
+
+
+        wakeUpPhysics();
+
+    }
+);
+
+
+window.addEventListener(
+    "mouseup",
+    function(){
+
+        isDragging = false;
+
+    }
+);
+
+
+/* =========================================================
+   ZOOM
+   ========================================================= */
+
+container.addEventListener(
+    "wheel",
+    function(e){
+
+        e.preventDefault();
+
+
+        const zoomIntensity = 0.08;
+
+        const wheel =
+            e.deltaY < 0
+                ? 1
+                : -1;
+
+
+        camera.zoom =
+            Math.min(
+                Math.max(
+                    camera.zoom *
+                    Math.exp(
+                        wheel *
+                        zoomIntensity
+                    ),
+                    0.2
+                ),
+                4
+            );
+
+
+        wakeUpPhysics();
+
+    },
+    {
+        passive:false
+    }
+);
+
+
+/* =========================================================
+   FILTRAGE
+   ========================================================= */
+
+function filterTag(
+    tag,
+    buttonEl
+){
+
+    currentTag = tag;
+
+
+    document
+        .querySelectorAll(
+            ".controls button"
+        )
+        .forEach(
+            btn =>
+                btn.classList.remove(
+                    "active"
+                )
+        );
+
+
+    buttonEl.classList.add("active");
+
+
+    let matchingNodes = [];
+
+
+    nodes.forEach(node => {
+
+        if(
+            tag === "all" ||
+            node.data.tags.includes(tag)
+        ){
+
+            node.element.classList.remove(
+                "faded"
+            );
+
+            matchingNodes.push(node);
+
+        }
+        else{
+
+            node.element.classList.add(
+                "faded"
+            );
+
+        }
+
+    });
+
+
+    /* ---------------------------------------------
+       CENTRAGE SUR LE GROUPE
+       --------------------------------------------- */
+
+    if(
+        tag !== "all" &&
+        matchingNodes.length > 0
+    ){
+
+        let sumX = 0;
+        let sumY = 0;
+        let sumZ = 0;
+
+
+        matchingNodes.forEach(n => {
+
+            sumX += n.x;
+            sumY += n.y;
+            sumZ += n.z;
+
+        });
+
+
+        const avgX =
+            sumX /
+            matchingNodes.length;
+
+        const avgY =
+            sumY /
+            matchingNodes.length;
+
+        const avgZ =
+            sumZ /
+            matchingNodes.length;
+
+
+        const cosY =
+            Math.cos(camera.rotY);
+
+        const sinY =
+            Math.sin(camera.rotY);
+
+
+        const x1 =
+            avgX * cosY -
+            avgZ * sinY;
+
+        const z1 =
+            avgX * sinY +
+            avgZ * cosY;
+
+
+        const cosX =
+            Math.cos(camera.rotX);
+
+        const sinX =
+            Math.sin(camera.rotX);
+
+
+        const y2 =
+            avgY * cosX -
+            z1 * sinX;
+
+
+        const x2 = x1;
+
+
+        const distanceZ =
+            camera.distance +
+            (
+                avgY * sinX +
+                z1 * cosX
+            );
+
+
+        const fov =
+            400 * camera.zoom;
+
+
+        const scale =
+            fov /
+            (
+                distanceZ > 1
+                    ? distanceZ
+                    : 1
+            );
+
+
+        camera.targetOffsetX =
+            -(x2 * scale);
+
+
+        camera.targetOffsetY =
+            -(y2 * scale);
+
+    }
+    else{
+
+        camera.targetOffsetX = 0;
+
+        camera.targetOffsetY = 0;
+
+    }
+
+
+    wakeUpPhysics();
+
+}
+
+
+/* =========================================================
+   RESET
+   ========================================================= */
+
+function resetView(){
+
+    camera.targetOffsetX = 0;
+
+    camera.targetOffsetY = 0;
+
+    camera.rotX = 0.3;
+
+    camera.rotY = 0.5;
+
+    camera.zoom = 1;
+
+
+    currentTag = "all";
+
+
+    document
+        .querySelectorAll(
+            ".controls button"
+        )
+        .forEach(
+            btn =>
+                btn.classList.remove(
+                    "active"
+                )
+        );
+
+
+    document
+        .querySelector(
+            ".controls button"
+        )
+        .classList.add("active");
+
+
+    nodes.forEach(node => {
+
+        node.element.classList.remove(
+            "faded"
+        );
+
+    });
+
+
+    wakeUpPhysics();
+
+}
+
+
+/* =========================================================
+   PANNEAU D'INFORMATION
+   ========================================================= */
+
+function showPanel(imgData){
+
+    panel.innerHTML = `
+
+        <div class="panel-info">
+
+            <div class="panel-row">
+                <span class="panel-label">
+                    file
+                </span>
+                ${imgData.file}
+            </div>
+
+
+            <div class="panel-row">
+                <span class="panel-label">
+                    capture
+                </span>
+                ${imgData.date || "—"}
+            </div>
+
+
+            <div class="panel-row">
+                <span class="panel-label">
+                    date
+                </span>
+                ${imgData.dateréel || "—"}
+            </div>
+
+
+            <div class="panel-row">
+                <span class="panel-label">
+                    tags
+                </span>
+                ${
+                    imgData.tags.join(", ")
+                    || "—"
+                }
+            </div>
+
+
+            <div class="panel-row">
+
+                <span class="panel-label">
+                    site
+                </span>
+
+                ${
+                    imgData.site
+                    ?
+                    `<a
+                        href="${imgData.site}"
+                        target="_blank"
+                        rel="noopener"
+                    >
+                        ${imgData.site}
+                    </a>`
+                    :
+                    "—"
+                }
+
+            </div>
+
+
+            <div class="panel-row">
+
+                <span class="panel-label">
+                    auteur
+                </span>
+
+                ${
+                    imgData.auteur || "—"
+                }
+
+            </div>
+
+
+            <div class="panel-note">
+
+                <span class="panel-label">
+                    note
+                </span>
+
+                <br><br>
+
+                ${
+                    imgData.note || "—"
+                }
+
+            </div>
+
+
+            <img
+                class="panel-image"
+                src="./${imgData.file}"
+                alt=""
+            >
+
+        </div>
+
+    `;
+
+}
+
+
+/* =========================================================
+   LANCEMENT
+   ========================================================= */
+
+initRhizome();
+
+requestAnimationFrame(draw);
+
+</script>
+
+</body>
+
+</html>
+```
