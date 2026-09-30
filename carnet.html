@@ -25,6 +25,8 @@ body{
 }
 
 
+
+
 /* =========================
    HEADER
 ========================= */
@@ -70,6 +72,38 @@ nav{
 }
 
 
+/* =====================================================
+   INFO
+===================================================== */
+
+.info {
+    position: fixed;
+    top: 5px;
+    right: 15px;
+    z-index: 2000;
+    font-size: 13px;
+}
+
+
+#info-button:hover {
+    text-decoration: underline;
+}
+
+#info-button {
+position: fixed;
+right: 15px;
+}
+
+#info-text {
+    width: 230px;
+    margin-top: 20px;
+    line-height: 1.35;
+    display: none;
+}
+
+.info.open #info-text {
+    display: block;
+}
 /* =========================
    DATE
 ========================= */
@@ -196,13 +230,16 @@ nav{
 /* =========================
    IMAGE 03
 ========================= */
+/* =========================
+   IMAGE 03
+========================= */
 
 .image3{
+    position:absolute;
     width:330px;
     left:65%;
     top:42%;
 }
-
 
 /* =========================
    IMAGE 04
@@ -214,6 +251,31 @@ nav{
     top:55%;
 }
 
+.image4 img{
+    display:block;
+    width:100%;
+    height:auto;
+}
+
+.image4 img:first-child{
+    position:relative;
+    z-index:1;
+}
+
+.image4 img:last-child{
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    z-index:2;
+    opacity:0;
+}
+
+.image4:hover img:last-child{
+    opacity:1;
+}
 
 /* =========================
    TEXTE 02
@@ -314,7 +376,11 @@ nav{
     margin:0 0 25px 0;
 }
 
-
+.note3 {
+    font-family: monospace;
+    position: relative;
+    left: 30px;
+}
 /* =========================
    IMAGE ARS
 ========================= */
@@ -451,7 +517,34 @@ nav{
     width:100%;
     height:auto;
 }
+.hover-image {
+    position: relative;
+    width: 100%;
+}
 
+.hover-image img {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+.hover-image img:first-child {
+    position: relative;
+    z-index: 1;
+}
+
+.hover-image img:last-child {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 2;
+    opacity: 0;
+    transition: opacity 0s;
+}
+
+.hover-image:hover img:last-child {
+    opacity: 1;
+}
 .section4-figure figcaption{
     margin-top:8px;
     font-size:11px;
@@ -529,6 +622,16 @@ footer a{
     color:#111;
     text-decoration:none;
 }
+.ascii {
+    font-family: monospace;
+    font-size: 12px;
+    line-height: 1;
+    white-space: pre;
+    color: #111;
+
+ 
+
+}
 
 </style>
 
@@ -545,6 +648,18 @@ footer a{
 </header>
 
 
+<div class="info">
+
+    <button id="info-button">
+        info
+    </button>
+
+    <div id="info-text">
+       carnet en ligne
+       recherche fragmentée
+    </div>
+
+</div>
 <!-- =========================
      CARNET
 ========================= -->
@@ -705,7 +820,8 @@ footer a{
 
     <div class="image image2">
 
-        <img src="images/flux.png">
+        <img src="images/flux.png"
+        onclick="message()">
 
     </div>
 
@@ -715,6 +831,8 @@ footer a{
     <div class="image image3">
 
         <img src="images/carnet/111.png">
+      
+    
 
     </div>
 
@@ -724,6 +842,7 @@ footer a{
     <div class="image image4">
 
         <img src="images/carnet/1.png">
+          <img src="images/carnet/404.png">
 
     </div>
 
@@ -884,8 +1003,12 @@ footer a{
             une masse gigantesque
             de déplace autour.
         </p>
+<a href="collection3.html"> cf: collection des mes images </a>
 
-
+<div class="note3"
+<p> ;;;***---,,,///;;;***,,,, </p> <p>
+    le musée explose</p>
+</div>
         <figure class="ars-figure">
 
             <img
@@ -1048,22 +1171,27 @@ footer a{
 
             Notre bureau devient une sorte de cimaise
             où l'on punaise nos images.
+
+            <a href="bureau.html"> bureau</a>
         </p>
 
 
     </div>
 
 
-    <figure class="section4-figure">
-
+   <figure class="section4-figure">
+    <div class="hover-image">
         <img
             src="images/carnet/zip.png"
             alt="Voyager en local"
         >
+     <a href="bureau.html"> 
+         <img src="images/carnet/bureau.png"> </a>
+    </div>
 
-        <figcaption>
-            test de bureau_musée I, 26 septembre 2026
-        </figcaption>
+    <figcaption>
+        test de bureau_musée I, 26 septembre 2026
+    </figcaption>
 
         <img
             src="images/carnet/zip2.jpg"
@@ -1133,10 +1261,72 @@ Le Youtubeur <a href="https://www.youtube.com/watch?v=Ctd_RJTe9tA" > Matt Herzog
 <p class="final-search">
     <b>
         Toujours à la recherche d’un musée virtuel.
-    </b>
-    
-</p>
+    </b></p>
+    <pre class="ascii">
 
+                    |                                        |
+                    |                                        |
+                    |                                        |
+                    |                                        |
+                    |             _____________              |
+                    |            /=============\             |
+                    |           /_______________\            |
+                    |           | ______________ |           |
+                    |           ||              ||           |
+                    |           ||              ||           |
+                    |           ||              ||           |
+                    |           ||______________||           |
+                    |           \++______________/           |
+                    |———————————/ “””””””””””””””\———————————|
+                   /           / :::::::::::::::: \          \
+                  /           /                    \          \
+                 /           (——————————————————————)          \
+                /            (______________________)           \
+               /                                                 \
+              /———————————————————————————————————————————————————\
+              |___________________________________________________|
+              |     |                                        |    |
+              |     |                                        |    |
+              |     |————————————————————————————————————————|    |
+              |    /                                         \    |
+              |   /                                           \   |
+              |  /                                             \  |
+              | /                                               \ |
+              |/                                                 \|
+              |                                                   |
+             /                                                     \
+            /                                                       \
+           /                                                         \
+
+</pre>
+    
+
+<script>function message() {
+    alert("le flux m'assome, il se vide dans mon écran bleu");
+}
+
+/* =====================================================
+   INFO — CLIC
+===================================================== */
+
+const info =
+    document.querySelector(".info");
+
+const infoButton =
+    document.getElementById("info-button");
+
+infoButton.addEventListener(
+    "click",
+    function(e) {
+
+        e.preventDefault();
+        e.stopPropagation();
+
+        info.classList.toggle("open");
+
+    }
+);
+    </script>
 
 <footer>
     <a href="index.html">
