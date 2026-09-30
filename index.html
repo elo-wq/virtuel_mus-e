@@ -5,6 +5,7 @@
 <head>
 
 <meta charset="UTF-8">
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>ELO</title>
@@ -85,6 +86,39 @@ nav a:hover {
 
 .intro p {
     margin: 0 0 15px 0;
+}
+
+
+/* =====================================================
+   INFO
+===================================================== */
+
+.info {
+    position: fixed;
+    top: 5px;
+    right: 15px;
+    z-index: 2000;
+    font-size: 13px;
+}
+
+#info-button:hover {
+    text-decoration: underline;
+}
+
+#info-button {
+    position: fixed;
+    right: 15px;
+}
+
+#info-text {
+    width: 230px;
+    margin-top: 20px;
+    line-height: 1.35;
+    display: none;
+}
+
+.info.open #info-text {
+    display: block;
 }
 
 
@@ -322,6 +356,11 @@ nav a:hover {
     top: 80%;
 }
 
+
+/* =====================================================
+   TEXTE CENTRAL
+===================================================== */
+
 .text {
     position: fixed;
     top: 50%;
@@ -331,6 +370,26 @@ nav a:hover {
 }
 
 
+/* =====================================================
+   MENU FLUX
+===================================================== */
+
+.flux-menu {
+    position: absolute;
+    left: 0;
+    top: 100%;
+    margin-top: 8px;
+    display: flex;
+    gap: 6px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.15s ease;
+}
+
+.image8.show-menu .flux-menu {
+    opacity: 1;
+    pointer-events: auto;
+}
 
 </style>
 
@@ -351,16 +410,41 @@ nav a:hover {
     </a>
 
     <nav>
-
-       
     </nav>
 
 </header>
 
 
-<div class="text">
-    <a href="texte.html"> le musée m'englouti</a>
+<!-- =====================================================
+     INFO
+===================================================== -->
+
+<div class="info">
+
+    <button id="info-button">
+        info
+    </button>
+
+    <div id="info-text">
+
+        recherche en cours autour du musée virtuel, 
+        expérimentation de geste et itération 
+
+    </div>
+
 </div>
+
+
+<!-- =====================================================
+     TEXTE CENTRAL
+===================================================== -->
+
+<div class="text">
+
+    <a href="texte.html">le musée m'englouti</a>
+
+</div>
+
 
 <!-- =====================================================
      INTRO
@@ -369,9 +453,11 @@ nav a:hover {
 <div class="intro">
 
     <p>
+
         virtual museums<br>
         digital spaces<br>
         media archaeology
+
     </p>
 
 </div>
@@ -384,367 +470,383 @@ nav a:hover {
 <main class="wall">
 
 
-    <!-- =================================================
-         01 — ARCHIVE
-    ================================================== -->
+<!-- =================================================
+     01 — MAQUETTE
+================================================== -->
 
-    <a
-        href="maquette.html"
-        class="item image1"
+<a
+    href="maquette.html"
+    class="item image1"
+>
+
+    <img src="images/1.png">
+
+    <div class="hover-text">
+
+        <strong>
+            01 — maquette
+        </strong>
+
+        <br>
+
+        maquette d'un musée virtuel
+
+    </div>
+
+</a>
+
+
+<!-- =================================================
+     02 — PERF
+================================================== -->
+
+<a
+    href="perf.html"
+    class="item image2"
+>
+
+    <img src="images/datamuseum1.png">
+
+    <div class="hover-text">
+
+        <strong>
+            02 — perf écran
+        </strong>
+
+        <br>
+
+        performance d'écran à travers la construction d'un musée en live
+
+    </div>
+
+</a>
+
+
+<!-- =================================================
+     03 — JEUX
+================================================== -->
+
+<a
+    href="jeux.html"
+    class="item image3"
+>
+
+    <img src="images/jeux.png">
+
+    <div class="hover-text">
+
+        <strong>
+            03 — jeux
+        </strong>
+
+        <br>
+
+        Recherche autour du jeu vidéo sur Godot et de la création d'un jeu expérimental.
+
+    </div>
+
+</a>
+
+
+<!-- =================================================
+     04 — DESSIN
+================================================== -->
+
+<div
+    class="item image4"
+    id="drawing-item"
+>
+
+    <img
+        src="images/dessin.png"
+        alt="Dessin"
     >
 
-        <img src="images/1.png">
+    <div class="hover-text">
 
-        <div class="hover-text">
+        <strong>
+            04 — dessin
+        </strong>
 
-            <strong>
-                01 — maquette
-            </strong>
+        <br>
 
-            <br>
+        Dessins I, croquis II, planches de BD III
 
-            maquette d'un musée virtuel
-
-        </div>
-
-    </a>
+    </div>
 
 
-    <!-- =================================================
-         02 — PERF
-    ================================================== -->
+    <!-- PETITS BOUTONS DESSIN -->
 
-    <a
-        href="perf.html"
-        class="item image2"
-    >
+    <div class="drawing-menu">
 
-        <img src="images/datamuseum1.png">
-
-        <div class="hover-text">
-
-            <strong>
-                02 — perf écran
-            </strong>
-
-            <br>
-
-            performance d'écran à travers la construction d'un musée en live
-
-        </div>
-
-    </a>
-
-
-    <!-- =================================================
-         03 — JEUX
-    ================================================== -->
-
-    <a
-        href="jeux.html"
-        class="item image3"
-    >
-
-        <img src="images/jeux.png">
-
-        <div class="hover-text">
-
-            <strong>
-                03 — jeux
-            </strong>
-
-            <br>
-
-            Recherche autour du jeu vidéo sur Godot et de la création d'un jeu expérimental.
-
-        </div>
-
-    </a>
-
-
-    <!-- =================================================
-         04 — DESSIN
-    ================================================== -->
-
-    <div
-        class="item image4"
-        id="drawing-item"
-    >
-
-        <img
-            src="images/dessin.png"
-            alt="Dessin"
+        <a
+            href="dessin2.html"
+            class="drawing-icon"
+            title="Dessins 1"
         >
+            01
+        </a>
 
-        <div class="hover-text">
+        <a
+            href="dessin.html"
+            class="drawing-icon"
+            title="Dessins 2"
+        >
+            02
+        </a>
 
-            <strong>
-                04 — dessin
-            </strong>
+        <a
+            href="dessin3.html"
+            class="drawing-icon"
+            title="Dessins 3"
+        >
+            03
+        </a>
 
-            <br>
+    </div>
 
-            Dessins I, croquis II, planches de BD III
-
-        </div>
+</div>
 
 
-        <!-- =============================================
-             PETITS BOUTONS DESSIN
-        ============================================== -->
+<!-- =================================================
+     05 — COLLECTION
+================================================== -->
 
-        <div class="drawing-menu">
+<div
+    class="item image5"
+    id="collection-item"
+>
 
-            <a
-                href="dessin2.html"
-                class="drawing-icon"
-                title="Dessins 1"
-            >
-                01
-            </a>
+    <img src="images/collection.png">
 
-            <a
-                href="dessin.html"
-                class="drawing-icon"
-                title="Dessins 2"
-            >
-                02
-            </a>
+    <div class="hover-text">
 
-            <a
-                href="dessin3.html"
-                class="drawing-icon"
-                title="Dessins 3"
-            >
-                03
-            </a>
+        <strong>
+            05 — collection
+        </strong>
 
-        </div>
+        <br>
+
+        création d'une collection d'archive des musées virtuels glannés sur le web.
 
     </div>
 
 
-    <!-- =================================================
-         05 — COLLECTION
-    ================================================== -->
+    <!-- PETITS BOUTONS COLLECTION -->
 
-    <div
-        class="item image5"
-        id="collection-item"
-    >
+    <div class="collection-menu">
 
-        <img src="images/collection.png">
+        <a
+            href="collection.html"
+            class="drawing-icon"
+            title="collection I"
+        >
+            01
+        </a>
 
-        <div class="hover-text">
+        <a
+            href="collection2.html"
+            class="drawing-icon"
+            title="collection II"
+        >
+            02
+        </a>
 
-            <strong>
-                05 — collection
-            </strong>
+        <a
+            href="collection3.html"
+            class="drawing-icon"
+            title="collection III"
+        >
+            03
+        </a>
 
-            <br>
+    </div>
 
-            création d'une collection d'archive des musées virtuels glannés sur le web.
-
-        </div>
+</div>
 
 
-        <!-- =============================================
-             PETITS BOUTONS COLLECTION
-        ============================================== -->
+<!-- =================================================
+     06 — EXP1
+================================================== -->
 
-        <div class="collection-menu">
+<a
+    href="page4.html"
+    class="item image6"
+>
 
-            <a
-                href="collection.html"
-                class="drawing-icon"
-                title="collection I"
-            >
-                01
-            </a>
+    <img src="images/exp1.png">
 
-            <a
-                href="collection2.html"
-                class="drawing-icon"
-                title="collection II"
-            >
-                02
-            </a>
+    <div class="hover-text">
 
-              <a
-                href="collection3.html"
-                class="drawing-icon"
-                title="collection III"
-            >
-                03
-            </a>
+        <strong>
+            06 — exp1
+        </strong>
 
-        </div>
+        <br>
+
+        site expérimental, en cours de développement
+
+    </div>
+
+</a>
+
+
+<!-- =================================================
+     07 — SPEEDRUN
+================================================== -->
+
+<div
+    class="item image7"
+    id="speedrun-item"
+>
+
+    <img src="images_bright1/0001.jpg">
+
+    <div class="hover-text">
+
+        <strong>
+            07 — virtualisation du musée
+        </strong>
 
     </div>
 
 
-    <!-- =================================================
-         06 — EXP1
-    ================================================== -->
+    <!-- PETITS BOUTONS SPEEDRUN -->
 
-    <a
-        href="page4.html"
-        class="item image6"
-    >
+    <div class="speedrun-menu">
 
-        <img src="images/exp1.png">
+        <a
+            href="speedrun.html"
+            class="drawing-icon"
+            title="speedrun I"
+        >
+            01
+        </a>
 
-        <div class="hover-text">
+        <a
+            href="speedrun2.html"
+            class="drawing-icon"
+            title="speedrun II"
+        >
+            02
+        </a>
 
-            <strong>
-                06 — exp1
-            </strong>
+        <a
+            href="google.html"
+            class="drawing-icon"
+            title="google museum"
+        >
+            03
+        </a>
 
-            <br>
+    </div>
 
-            site expérimental, en cours de développement
-
-        </div>
-
-    </a>
-
-
-    <!-- =================================================
-         07 — SPEEDRUN
-    ================================================== -->
-
-    <div
-        class="item image7"
-        id="speedrun-item"
-    >
-
-        <img src="images_bright1/0001.jpg">
-
-        <div class="hover-text">
-
-            <strong>
-                07 — virtualisation du musée
-            </strong>
-
-    
-
-        </div>
+</div>
 
 
-        <!-- =============================================
-             PETITS BOUTONS SPEEDRUN
-        ============================================== -->
+<!-- =================================================
+     08 — FLUX
+================================================== -->
 
-        <div class="speedrun-menu">
+<div
+    class="item image8"
+    id="flux-item"
+>
 
-            <a
-                href="speedrun.html"
-                class="drawing-icon"
-                title="speedrun I"
-            >
-                01
-            </a>
+    <img src="images/flux.png">
 
-            <a
-                href="speedrun2.html"
-                class="drawing-icon"
-                title="speedrun II"
-            >
-                02
-            </a>
+    <div class="hover-text">
 
-     <a
-                href="google.html"
-                class="drawing-icon"
-                title="google museum"
-            >
-                03
-            </a>
+        <strong>
+            08 — flux
+        </strong>
 
-        </div>
+        <br>
+
+        migraines d'images
 
     </div>
 
 
-    <!-- =================================================
-         08 — FLUX
-    ================================================== -->
+    <!-- PETITS BOUTONS FLUX -->
 
-    <a
-        href="flux.html"
-        class="item image8"
-    >
+    <div class="flux-menu">
 
-        <img src="images/flux.png">
+        <a
+            href="flux.html"
+            class="drawing-icon"
+            title="flux I"
+        >
+            01
+        </a>
 
-        <div class="hover-text">
+        <a
+            href="bureau.html"
+            class="drawing-icon"
+            title="flux II"
+        >
+            02
+        </a>
 
-            <strong>
-                08 — flux
-            </strong>
+       
 
-            <br>
+    </div>
 
-            migraines d'images
-
-        </div>
-
-    </a>
-
-
-    <!-- =================================================
-         09 — CARNET
-    ================================================== -->
-
-    <a
-        href="carnet.html"
-        class="item image9"
-    >
-
-        <img src="images/4.png">
-
-        <div class="hover-text">
-
-            <strong>
-                09 — carnet en ligne
-            </strong>
-
-            <br>
-
-            carnet de bord, à Linz septembre 2026
-
-        </div>
-
-    </a>
+</div>
 
 
-    <!-- =================================================
-         10 — MEMOIRE
-    ================================================== -->
+<!-- =================================================
+     09 — CARNET
+================================================== -->
 
-    <a
-        href="note.html"
-        class="item image10"
-    >
+<a
+    href="carnet.html"
+    class="item image9"
+>
 
-        <img src="images/3.png">
+    <img src="images/4.png">
 
-        <div class="hover-text">
+    <div class="hover-text">
 
-            <strong>
-                10 — mémoire
-            </strong>
+        <strong>
+            09 — carnet en ligne
+        </strong>
 
-            <br>
+        <br>
 
-            mémoire de recherche et création, V1
+        carnet de bord, à Linz septembre 2026
 
-        </div>
+    </div>
 
-    </a>
+</a>
+
+
+<!-- =================================================
+     10 — MEMOIRE
+================================================== -->
+
+<a
+    href="note.html"
+    class="item image10"
+>
+
+    <img src="images/3.png">
+
+    <div class="hover-text">
+
+        <strong>10 — mémoire</strong>
+
+        <br>
+
+        mémoire de recherche et création, V1
+
+    </div>
+
+</a>
 
 
 </main>
+
 
 
 <script>
@@ -757,15 +859,9 @@ nav a:hover {
 const drawingItem =
     document.getElementById("drawing-item");
 
-
 drawingItem.addEventListener(
     "click",
     function(e) {
-
-        /*
-         Si on clique sur un des petits boutons,
-         on laisse le lien fonctionner normalement.
-        */
 
         if (
             e.target.closest(".drawing-icon")
@@ -773,23 +869,15 @@ drawingItem.addEventListener(
             return;
         }
 
-
-        /*
-         Si l'image a été déplacée,
-         on ne considère pas ça comme un clic.
-        */
-
-        if (drawingItem.dataset.moved === "true") {
-
+        if (
+            drawingItem.dataset.moved === "true"
+        ) {
             drawingItem.dataset.moved = "false";
-
             return;
         }
 
-
         e.preventDefault();
         e.stopPropagation();
-
 
         drawingItem.classList.toggle(
             "show-menu"
@@ -806,15 +894,9 @@ drawingItem.addEventListener(
 const collectionItem =
     document.getElementById("collection-item");
 
-
 collectionItem.addEventListener(
     "click",
     function(e) {
-
-        /*
-         Si on clique sur un des petits boutons,
-         on laisse le lien fonctionner normalement.
-        */
 
         if (
             e.target.closest(".drawing-icon")
@@ -822,23 +904,15 @@ collectionItem.addEventListener(
             return;
         }
 
-
-        /*
-         Si l'image a été déplacée,
-         on ne considère pas ça comme un clic.
-        */
-
-        if (collectionItem.dataset.moved === "true") {
-
+        if (
+            collectionItem.dataset.moved === "true"
+        ) {
             collectionItem.dataset.moved = "false";
-
             return;
         }
 
-
         e.preventDefault();
         e.stopPropagation();
-
 
         collectionItem.classList.toggle(
             "show-menu"
@@ -855,15 +929,9 @@ collectionItem.addEventListener(
 const speedrunItem =
     document.getElementById("speedrun-item");
 
-
 speedrunItem.addEventListener(
     "click",
     function(e) {
-
-        /*
-         Si on clique sur un petit bouton,
-         on laisse le lien fonctionner normalement.
-        */
 
         if (
             e.target.closest(".drawing-icon")
@@ -871,25 +939,52 @@ speedrunItem.addEventListener(
             return;
         }
 
-
-        /*
-         Si l'image a été déplacée,
-         on ne considère pas ça comme un clic.
-        */
-
-        if (speedrunItem.dataset.moved === "true") {
-
+        if (
+            speedrunItem.dataset.moved === "true"
+        ) {
             speedrunItem.dataset.moved = "false";
-
             return;
         }
-
 
         e.preventDefault();
         e.stopPropagation();
 
-
         speedrunItem.classList.toggle(
+            "show-menu"
+        );
+
+    }
+);
+
+
+/* =====================================================
+   MENU FLUX — CLIC
+===================================================== */
+
+const fluxItem =
+    document.getElementById("flux-item");
+
+fluxItem.addEventListener(
+    "click",
+    function(e) {
+
+        if (
+            e.target.closest(".drawing-icon")
+        ) {
+            return;
+        }
+
+        if (
+            fluxItem.dataset.moved === "true"
+        ) {
+            fluxItem.dataset.moved = "false";
+            return;
+        }
+
+        e.preventDefault();
+        e.stopPropagation();
+
+        fluxItem.classList.toggle(
             "show-menu"
         );
 
@@ -905,7 +1000,6 @@ document.addEventListener(
     "click",
     function(e) {
 
-
         if (
             !drawingItem.contains(e.target)
         ) {
@@ -915,7 +1009,6 @@ document.addEventListener(
             );
 
         }
-
 
         if (
             !collectionItem.contains(e.target)
@@ -927,12 +1020,21 @@ document.addEventListener(
 
         }
 
-
         if (
             !speedrunItem.contains(e.target)
         ) {
 
             speedrunItem.classList.remove(
+                "show-menu"
+            );
+
+        }
+
+        if (
+            !fluxItem.contains(e.target)
+        ) {
+
+            fluxItem.classList.remove(
                 "show-menu"
             );
 
@@ -948,7 +1050,6 @@ document.addEventListener(
 
 const items =
     document.querySelectorAll(".item");
-
 
 items.forEach(function(item) {
 
@@ -970,38 +1071,28 @@ items.forEach(function(item) {
         "mousedown",
         function(e) {
 
-
-            /*
-             Les petits boutons ne doivent
-             pas déclencher le déplacement.
-            */
-
             if (
                 e.target.closest(".drawing-icon") ||
-                e.target.closest(".speedrun-menu")
+                e.target.closest(".speedrun-menu") ||
+                e.target.closest(".flux-menu")
             ) {
                 return;
             }
 
-
             dragging = true;
             moved = false;
-
 
             startX = e.clientX;
             startY = e.clientY;
 
-
             const rect =
                 item.getBoundingClientRect();
-
 
             offsetX =
                 e.clientX - rect.left;
 
             offsetY =
                 e.clientY - rect.top;
-
 
             item.style.zIndex = 2000;
 
@@ -1019,18 +1110,15 @@ items.forEach(function(item) {
 
             if (!dragging) return;
 
-
             const distanceX =
                 Math.abs(
                     e.clientX - startX
                 );
 
-
             const distanceY =
                 Math.abs(
                     e.clientY - startY
                 );
-
 
             if (
                 distanceX > 5 ||
@@ -1044,15 +1132,12 @@ items.forEach(function(item) {
 
             }
 
-
             if (!moved) return;
-
 
             item.style.left =
                 (
                     e.clientX - offsetX
                 ) + "px";
-
 
             item.style.top =
                 (
@@ -1081,10 +1166,31 @@ items.forEach(function(item) {
 });
 
 
+/* =====================================================
+   INFO — CLIC
+===================================================== */
+
+const info =
+    document.querySelector(".info");
+
+const infoButton =
+    document.getElementById("info-button");
+
+infoButton.addEventListener(
+    "click",
+    function(e) {
+
+        e.preventDefault();
+        e.stopPropagation();
+
+        info.classList.toggle("open");
+
+    }
+);
+
 </script>
 
 
 </body>
 
 </html>
-
