@@ -105,34 +105,29 @@ img {
 
 <img
 src="images/carnet/7.png"
-onclick="message()"
+data-original="images/carnet/7.png"
+data-hover="images/carnet/bureau.png"
+onmouseenter="this.src=this.dataset.hover"
+onmouseleave="this.src=this.dataset.original"
 >
 
 
 <img
 src="images/carnet/8.png"
-onclick="message()"
+data-original="images/carnet/8.png"
+data-hover="images/carnet/10.png"
+onmouseenter="this.src=this.dataset.hover"
+onmouseleave="this.src=this.dataset.original"
 >
 
 
 <img
 src="images/carnet/9.png"
-onclick="message()"
+data-original="images/carnet/9.png"
+data-hover="images/carnet/zip.png"
+onmouseenter="this.src=this.dataset.hover"
+onmouseleave="this.src=this.dataset.original"
 >
-
-
-<img
-src="images/carnet/10.png"
-onclick="message()"
->
-
-
-<img
-src="images/carnet/bureau.png"
-onclick="message()"
->
-
-
 
 </div>
 
@@ -170,7 +165,7 @@ Le bureau semble être la première porte d’entrée au reste du stockage de no
 <br><br>
 
 
-Rachel Greene dans <a href="#" onclick="message()">Internet Art</a>  rappelle que le bureau « desktops are significant for their prevalence, even if they often peripheral, and for their metaphorical value, normalizing the computer interface for technophobes ».
+Rachel Greene dans <a href="#">Internet Art</a> rappelle que le bureau « desktops are significant for their prevalence, even if they often peripheral, and for their metaphorical value, normalizing the computer interface for technophobes ».
 
 <br><br>
 
@@ -182,6 +177,7 @@ Steven Johnson, dans <i>Interface Culture</i>, le décrit comme la « cathédral
 
 
 En 1997-1998, l'exposition en ligne <a href="http://www.easylife.org/desktop/desktop_is.html">desktop Is</a>, organisée par Alexei Shulgin, fait du bureau lui-même une œuvre.
+
 L’exposition se présente comme « The First International Online Desktop Exhibition ». Les participant·e·s y soumettent des captures d’écran de leur propre bureau.
 
 
@@ -212,7 +208,10 @@ Ces premières expérimentations du net art sont aujourd’hui reprises par des 
 Des artistes comme Molly Soda ou Léo Galibert-Laîné utilisent le bureau dans leurs films d’écran et leurs performances.
 
 <br><br>
-<b> <a href="perf.html"> desktop performance</a>  </b>
+
+<b>
+<a href="perf.html">desktop performance</a>
+</b>
 
 
 
@@ -221,21 +220,6 @@ Des artistes comme Molly Soda ou Léo Galibert-Laîné utilisent le bureau dans 
 
 
 </div>
-
-
-
-<script>
-
-function message() {
-
-    alert("[Internet Art, Rachel Greene, 2004, Thames and Hudson Ltd London, p.83]");
-
-}
-
-
-
-
-</script>
 
 
 
