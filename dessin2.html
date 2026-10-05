@@ -149,69 +149,6 @@ nav a:hover{
 
 
 /* =========================
-   SERIES
-========================= */
-
-.series{
-
-    margin-bottom:150px;
-
-}
-
-
-/* =========================
-   SERIES HEADER
-========================= */
-
-.series-header{
-
-    display:grid;
-
-    grid-template-columns:
-        40px
-        200px
-        1fr;
-
-    gap:20px;
-
-    margin-bottom:35px;
-
-}
-
-.series-number{
-
-    font-size:11px;
-
-}
-
-.series-title{
-
-    margin:0;
-
-    font-size:13px;
-
-    font-weight:normal;
-
-}
-
-.series-description{
-
-    max-width:420px;
-
-    font-size:11px;
-
-    line-height:1.4;
-
-}
-
-.series-description p{
-
-    margin:0;
-
-}
-
-
-/* =========================
    GRILLE
 ========================= */
 
@@ -595,8 +532,8 @@ footer a:hover{
         ELO
     </a>
 
-
-
+    <nav>
+    </nav>
 
 </header>
 
@@ -613,91 +550,121 @@ footer a:hover{
 
     <section class="intro">
 
-
         <div class="intro-number">
-           I
+            I
         </div>
-
 
         <div class="intro-title">
             dessin crayon de couleur, juin 2026
         </div>
 
-
         <div class="intro-text">
 
             <p>
-               première itération d'une série de 16 dessins. 
+                première itération d'une série de 16 dessins.
             </p>
 
         </div>
 
-
     </section>
 
 
-        <!-- =========================
-             GRILLE
-        ========================= -->
+    <!-- =========================
+         GRILLE
+    ========================= -->
 
-        <div class="drawings-grid">
+    <div class="drawings-grid">
 
 
-            <div class="drawing" data-index="0">
-                <img src="dessin/31.jpg">
-                <div class="drawing-number">01</div>
+        <div class="drawing" data-index="0">
+
+            <img src="dessin/31.jpg" alt="Dessin 01">
+
+            <div class="drawing-number">
+                01
             </div>
-
-
-            <div class="drawing" data-index="1">
-                <img src="dessin/32.jpg">
-                <div class="drawing-number">02</div>
-            </div>
-
-
-            <div class="drawing" data-index="2">
-                <img src="dessin/33.jpg">
-                <div class="drawing-number">03</div>
-            </div>
-
-
-            <div class="drawing" data-index="3">
-                <img src="dessin/34.jpg">
-                <div class="drawing-number">04</div>
-            </div>
-
-
-            <div class="drawing" data-index="4">
-                <img src="dessin/35.jpg">
-                <div class="drawing-number">05</div>
-            </div>
-
-
-            <div class="drawing" data-index="5">
-                <img src="dessin/36.jpg">
-                <div class="drawing-number">06</div>
-            </div>
-
-
-            <div class="drawing" data-index="6">
-                <img src="dessin/37.jpg">
-                <div class="drawing-number">07</div>
-            </div>
-
-
-
-            <div class="drawing" data-index="9">
-                <img src="dessin/38.jpg">
-                <div class="drawing-number">10</div>
-            </div>
-
-     
-
 
         </div>
 
-    </section>
 
+        <div class="drawing" data-index="1">
+
+            <img src="dessin/32.jpg" alt="Dessin 02">
+
+            <div class="drawing-number">
+                02
+            </div>
+
+        </div>
+
+
+        <div class="drawing" data-index="2">
+
+            <img src="dessin/33.jpg" alt="Dessin 03">
+
+            <div class="drawing-number">
+                03
+            </div>
+
+        </div>
+
+
+        <div class="drawing" data-index="3">
+
+            <img src="dessin/34.jpg" alt="Dessin 04">
+
+            <div class="drawing-number">
+                04
+            </div>
+
+        </div>
+
+
+        <div class="drawing" data-index="4">
+
+            <img src="dessin/35.jpg" alt="Dessin 05">
+
+            <div class="drawing-number">
+                05
+            </div>
+
+        </div>
+
+
+        <div class="drawing" data-index="5">
+
+            <img src="dessin/36.jpg" alt="Dessin 06">
+
+            <div class="drawing-number">
+                06
+            </div>
+
+        </div>
+
+
+        <div class="drawing" data-index="6">
+
+            <img src="dessin/37.jpg" alt="Dessin 07">
+
+            <div class="drawing-number">
+                07
+            </div>
+
+        </div>
+
+
+        <div class="drawing" data-index="7">
+
+            <img src="dessin/38.jpg" alt="Dessin 08">
+
+            <div class="drawing-number">
+                08
+            </div>
+
+        </div>
+
+
+    </div>
 
 
     <!-- FOOTER -->
@@ -708,10 +675,10 @@ footer a:hover{
             ← back
         </a>
 
-
-         <a href="dessin.html">
-             next →
+        <a href="dessin.html">
+            next →
         </a>
+
     </footer>
 
 
@@ -749,7 +716,7 @@ footer a:hover{
 
 
     <div class="counter" id="counter">
-        01 / 30
+        01 / 08
     </div>
 
 
@@ -763,13 +730,25 @@ footer a:hover{
    IMAGES
 ========================= */
 
-const images = [];
+/*
+   IMPORTANT :
+   On utilise exactement les mêmes
+   images que celles affichées
+   dans la grille.
+*/
 
-for(let i = 1; i <= 30; i++){
+const images = [
 
-    images.push("dessin/" + i + ".jpg");
+    "dessin/31.jpg",
+    "dessin/32.jpg",
+    "dessin/33.jpg",
+    "dessin/34.jpg",
+    "dessin/35.jpg",
+    "dessin/36.jpg",
+    "dessin/37.jpg",
+    "dessin/38.jpg"
 
-}
+];
 
 
 /* =========================
