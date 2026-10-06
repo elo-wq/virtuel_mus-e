@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Musée — cabine</title>
+
+
+<style>
+
+/* =========================
+   GENERAL
+========================= */
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 13px;
+}
+
+
+/* =========================
+   IMAGE PRINCIPALE
+========================= */
+
+.musee {
+    position: relative;
+    width: 308px;
+    margin: 40px auto;
+}
+
+.musee > img {
+    width: 100%;
+    display: block;
+}
+
+
+/* =========================
+   HOVER IMAGE
+========================= */
+
+.musee > img:hover {
+    content: url("biblio2.png");
+}
+
+
+/* =========================
+   LES 6 TROUS
+========================= */
+
+.trou {
+    position: absolute;
+    width: 48px;
+    height: 78px;
+    border-radius: 22px;
+    cursor: pointer;
+    background: transparent;
+    z-index: 5;
+}
+
+
+/* =========================
+   PREMIERE RANGEE
+========================= */
+
+.trou1 {
+    left: 92px;
+    top: 88px;
+}
+
+.trou2 {
+    left: 169px;
+    top: 88px;
+}
+
+
+/* =========================
+   DEUXIEME RANGEE
+========================= */
+
+.trou3 {
+    left: 92px;
+    top: 194px;
+}
+
+.trou4 {
+    left: 169px;
+    top: 194px;
+}
+
+
+/* =========================
+   TROISIEME RANGEE
+========================= */
+
+.trou5 {
+    left: 92px;
+    top: 298px;
+}
+
+.trou6 {
+    left: 169px;
+    top: 298px;
+}
+
+
+/* =========================
+   POPUPS
+========================= */
+
+.popup {
+    display: none;
+    position: fixed;
+    z-index: 100;
+}
+
+
+/* =========================
+   POSITIONS
+========================= */
+
+#popup1 {
+    left: 10%;
+    top: 10%;
+}
+
+#popup2 {
+    right: 10%;
+    top: 12%;
+}
+
+#popup3 {
+    left: 8%;
+    top: 45%;
+}
+
+#popup4 {
+    right: 8%;
+    top: 45%;
+}
+
+#popup5 {
+    left: 15%;
+    bottom: 8%;
+}
+
+#popup6 {
+    right: 15%;
+    bottom: 8%;
+}
+
+
+/* =========================
+   DEUX IMAGES PAR FENETRE
+========================= */
+
+.images-popup {
+
+    display: flex;
+
+    gap: 10px;
+
+    margin-bottom: 10px;
+
+}
+
+
+.images-popup img {
+
+    display: block;
+
+    width: 150px;
+
+    height: auto;
+
+}
+
+
+/* =========================
+   TEXTE
+========================= */
+
+.texte {
+
+    line-height: 1.4;
+
+    width: 310px;
+
+}
+
+
+/* =========================
+   FERMER
+========================= */
+
+.fermer {
+
+    position: absolute;
+
+    right: -20px;
+
+    top: -20px;
+
+    font-size: 18px;
+
+    cursor: pointer;
+
+}
+
+
+/* =========================
+   BOUTON BAS
+========================= */
+
+button {
+
+    position: fixed;
+
+    bottom: 20px;
+
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    background: none;
+
+    border: 1px solid black;
+
+    font-family: Arial, Helvetica, sans-serif;
+
+    font-size: 18px;
+
+    cursor: pointer;
+
+    padding: 2px 12px;
+
+    z-index: 200;
+
+}
+
+
+button:hover {
+
+    background: black;
+
+}
+
+
+button a {
+
+    color: black;
+
+    text-decoration: none;
+
+}
+
+
+button:hover a {
+
+    color: white;
+
+}
+
+
+/* =========================
+   ZONES DES TROUS
+========================= */
+
+/*
+.trou {
+
+    background: rgba(255, 0, 0, 0.25);
+
+    border: 1px solid red;
+
+}
+*/
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- =========================
+     IMAGE PRINCIPALE
+========================= -->
+
+<div class="musee">
+
+    <img id="imagePrincipale" src="biblio.png">
+
+
+    <!-- TROUS -->
+
+    <div
+        class="trou trou1"
+        onclick="ouvrir('popup1')">
+    </div>
+
+    <div
+        class="trou trou2"
+        onclick="ouvrir('popup2')">
+    </div>
+
+    <div
+        class="trou trou3"
+        onclick="ouvrir('popup3')">
+    </div>
+
+    <div
+        class="trou trou4"
+        onclick="ouvrir('popup4')">
+    </div>
+
+    <div
+        class="trou trou5"
+        onclick="ouvrir('popup5')">
+    </div>
+
+    <div
+        class="trou trou6"
+        onclick="ouvrir('popup6')">
+    </div>
+
+</div>
+
+
+
+<!-- =========================
+     POPUP 1
+========================= -->
+
+<div id="popup1" class="popup">
+
+    <span
+        class="fermer"
+        onclick="fermer('popup1')">
+        ×
+    </span>
+
+
+    <div class="images-popup">
+
+        <img src="biblio/images.png">
+
+        <img src="biblio/images2.png">
+
+    </div>
+
+
+    <div class="texte">
+
+        <b>Faire chuter le musée</b>
+
+        <br><br>
+
+        Le musée virtuel devient un espace où
+        les déchets s'accumulent, où les images
+        disparues s'entassent sur le sol.
+
+    </div>
+
+</div>
+
+
+
+<!-- =========================
+     POPUP 2
+========================= -->
+
+<div id="popup2" class="popup">
+
+    <span
+        class="fermer"
+        onclick="fermer('popup2')">
+        ×
+    </span>
+
+
+    <div class="images-popup">
+
+        <img src="biblio/book2.jpg">
+
+        <img src="biblio/book2-2.jpg">
+
+    </div>
+
+
+    <div class="texte">
+
+        <b>internet art</b>
+
+        <br><br>
+
+        réflexion sur le
+
+        <a href="bureau.html" target="_blank">
+            bureau
+        </a>
+
+        comme espace d'exposition
+
+    </div>
+
+</div>
+
+
+
+<!-- =========================
+     POPUP 3
+========================= -->
+
+<div id="popup3" class="popup">
+
+    <span
+        class="fermer"
+        onclick="fermer('popup3')">
+        ×
+    </span>
+
+
+    <div class="images-popup">
+
+        <img src="biblio/book3.jpg">
+
+        <img src="biblio/book3-2.jpg">
+
+    </div>
+
+
+    <div class="texte">
+
+        <b>vagues dans le musée</b>
+
+        <br><br>
+
+    </div>
+
+</div>
+
+
+
+<!-- =========================
+     POPUP 4
+========================= -->
+
+<div id="popup4" class="popup">
+
+    <span
+        class="fermer"
+        onclick="fermer('popup4')">
+        ×
+    </span>
+
+
+    <div class="images-popup">
+
+        <img src="biblio/book4.jpg">
+
+        <img src="biblio/book4-2.jpg">
+
+    </div>
+
+
+    <div class="texte">
+
+        <b>lettres à un jeune musée</b>
+
+        <br><br>
+
+    </div>
+
+</div>
+
+
+
+<!-- =========================
+     POPUP 5
+========================= -->
+
+<div id="popup5" class="popup">
+
+    <span
+        class="fermer"
+        onclick="fermer('popup5')">
+        ×
+    </span>
+
+
+    <div class="images-popup">
+
+        <img src="biblio/book5.jpg">
+
+        <img src="biblio/book5-2.jpg">
+
+    </div>
+
+
+    <div class="texte">
+
+        <b>trouvé à la bibliothèque enfin</b>
+
+        <br><br>
+
+    </div>
+
+</div>
+
+
+
+<!-- =========================
+     POPUP 6
+========================= -->
+
+<div id="popup6" class="popup">
+
+    <span
+        class="fermer"
+        onclick="fermer('popup6')">
+        ×
+    </span>
+
+
+    <div class="images-popup">
+
+        <img src="biblio/book6.jpg">
+
+        <img src="biblio/book6-2.jpg">
+
+    </div>
+
+
+    <div class="texte">
+
+        <b>flux, software, web</b>
+
+        <br><br>
+
+    </div>
+
+</div>
+
+
+
+
+
+<script>
+
+
+/* =========================
+   OUVRIR POPUP
+========================= */
+
+function ouvrir(id) {
+
+    document.querySelectorAll(".popup").forEach(function(popup) {
+
+        popup.style.display = "none";
+
+    });
+
+
+    document.getElementById(id).style.display = "block";
+
+}
+
+
+/* =========================
+   FERMER POPUP
+========================= */
+
+function fermer(id) {
+
+    document.getElementById(id).style.display = "none";
+
+}
+
+
+/* =========================
+   ESC
+========================= */
+
+document.addEventListener("keydown", function(e) {
+
+    if (e.key === "Escape") {
+
+        document.querySelectorAll(".popup").forEach(function(popup) {
+
+            popup.style.display = "none";
+
+        });
+
+    }
+
+});
+
+
+</script>
+
+
+</body>
+
+</html>
