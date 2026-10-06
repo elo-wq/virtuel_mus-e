@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+
+<html lang="fr">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>MUSEE_OFFLINE_SPATIAL</title>
+
+<style>
+
+body {
+    margin: 0;
+    overflow: hidden;
+}
+
+/* texte machine à écrire */
+.texte {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: monospace;
+    font-size: 30px;
+    color: rgb(5, 5, 5);
+    white-space: nowrap;
+    overflow: hidden;
+    border-right: 2px solid black;
+    width: 0;
+
+    animation:
+        ecriture 6s steps(45) forwards,
+        curseur 0.7s step-end infinite;
+}
+
+/* bouton */
+.bouton {
+    position: relative;
+    left: 1400px;
+    top: 100px;
+}
+
+/* petit bloc de texte */
+.info {
+    display: none;
+
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+}
+
+/* écriture lettre par lettre */
+@keyframes ecriture {
+    from {
+        width: 0;
+    }
+
+    to {
+        width: 45ch;
+    }
+}
+
+/* curseur machine à écrire */
+@keyframes curseur {
+    50% {
+        border-color: transparent;
+    }
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="porte">
+
+    <a href="#" onclick="afficherTexte(); return false;">
+        <img src="img/porte/2.jpg">
+    </a>
+
+    <div class="texte">
+        La porte se dérobe sous mes pieds
+    </div>
+
+</div>
+
+<div class="info" id="info">
+    passage <a href="#" onclick="afficherImage(); return false;">secret</a><br><br>
+   Nous avons essayé de lever tous les obstacles qui pourraient empêcher le visiteur d’explorer ce lieu. 
+</div>
+Entrant dans le musée sans fin, notre premier instinct fut d’ouvrir portes et fenêtres : les courants d’air firent s’envoler en tous sens les documents, papiers qui se trouvaient là. 
+</div>
+
+<img id="imageCachee" src="image.jpg" style="display:none; position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); width:300px;">
+
+
+
+
+<div class="bouton">
+    <button>
+        <a href="narration3.html">portail</a>
+    </button>
+</div>
+
+
+<script>
+
+function afficherTexte() {
+
+    document.getElementById("info").style.display = "block";
+
+}
+
+function afficherImage() {
+    document.getElementById("imageCachee").style.display = "block";
+}
+
+</script>
+
+</body>
+
+

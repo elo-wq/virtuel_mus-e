@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+
+<style>
+
+body {
+    margin: 0;
+    background: white;
+}
+
+#boutonImages {
+    position: fixed;
+    top: 40px;
+    left: 20px;
+    z-index: 999;
+}
+
+#flux {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+}
+
+img {
+    position: absolute;
+    width: 300px;
+}
+
+/* texte à 10 images */
+#texte10 {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+  
+}
+
+/* texte à 20 images */
+#texte20 {
+    display: none;
+    position: fixed;
+    top: 55%;
+    left: 55%;
+    font-family: monospace;
+}
+
+/* texte à 30 images */
+#texte30 {
+    display: none;
+    position: fixed;
+    top: 60%;
+    left: 60%;
+      font-family: new times roman;
+}
+
+#texte32 {
+    display: none;
+    position: fixed;
+    top: 80%;
+    left: 65%;
+    text-color: blue;
+    text-decoration: underline;
+    text-decoration-color: blue;
+}
+
+/* bouton pour changer de page */
+#boutonPage {
+    display: none;
+    position: fixed;
+    bottom: 10px;
+    left: 800px;
+    z-index: 999;
+}
+
+.text1 {
+    position: relative;
+    left: 20px;
+}
+
+/* mot inconnu */
+.inconnu {
+    cursor: pointer;
+}
+
+/* image cachée */
+#imageCachee {
+    display: none;
+    position: fixed;
+    top: 50%;
+    right: 20px;
+    width: 300px;
+    z-index: 1000;
+}
+
+/* quand on survole "inconnu", l'image apparaît */
+.inconnu:hover + #imageCachee {
+    display: block;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="text1">
+    <p>clic jusqu'à en avoir mal à la main</p>
+</div>
+
+<!-- bouton pour faire apparaître les images -->
+<button id="boutonImages" onclick="ajouterImage()">+</button>
+
+<div id="flux"></div>
+
+
+<!-- texte qui apparaît à 10 images -->
+<div id="texte10">
+    archiver l'obscolescence d'un espace disparu
+</div>
+
+
+<!-- texte qui apparaît à 20 images -->
+<div id="texte20">
+    aie aie le bruit du clic
+</div>
+
+
+<!-- texte qui apparaît à 30 images -->
+<div id="texte30">
+
+       Le musée, lieu fantastique, lieu absent de tout lieu, a pour rôle de conserver mes œuvres d’art à travers les âges, niant ainsi l’histoire et la mort. Il se met hors lieu et hors temps. 
+
+(Lebensztejn, 1981)
+</div>
+
+<div id="texte32"> 
+
+  <span class="inconnu">inconnu</span>
+
+    <!-- image qui apparaît au survol -->
+    <img id="imageCachee" src="img/porte/images.jpg">
+
+</div>
+
+  
+
+
+
+
+<!-- apparaît après 40 clics -->
+<button id="boutonPage" onclick="changerPage()">portail II</button>
+
+
+<script>
+
+let n = 1;
+
+function ajouterImage() {
+
+    let image = document.createElement("img");
+
+    image.src = n + ".png";
+
+    image.style.left = (n * 20) + "px";
+    image.style.top = (n * 20) + "px";
+
+    document.getElementById("flux").appendChild(image);
+
+
+    // image numéro 7
+    if (n === 7) {
+        document.getElementById("texte10").style.display = "block";
+    }
+
+
+    // image numéro 14
+    if (n === 14) {
+        document.getElementById("texte20").style.display = "block";
+    }
+
+
+    // image numéro 21
+    if (n === 21) {
+        document.getElementById("texte30").style.display = "block";
+    }
+
+
+     // image numéro 21
+    if (n === 25) {
+        document.getElementById("texte32").style.display = "block";
+    }
+
+    // image numéro 29
+    if (n === 29) {
+        document.getElementById("boutonPage").style.display = "block";
+    }
+
+
+    n++;
+
+}
+
+
+function changerPage() {
+    window.location.href = "page2.html";
+}
+
+</script>
+
+</body>
+</html>
